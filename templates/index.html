@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div id="booking" class="section">
+		<div class="section-center">
+			<div class="container">
+				<div class="row">
+					<div class="booking-form">
+						<form id='search' method='POST'>
+							{% csrf_token %}
+							<div class="col-md-2">
+								<div class="form-group">
+									<select class="form-control" name="flighttype">
+										<option value="Round Trip" selected>Round Trip</option>
+										<option value="one way">One Way</option>
+										<option value="multi city">Multi City</option>
+									</select>
+									<span class="select-arrow"></span>
+									<span class="form-label">Flight Type</span>
+								</div>
+							</div>
+					
+
+							<div class="col-md-5">
+								<div class="form-group">
+									<input class="form-control" type="text" id="inputOrigin" name="depart"
+										placeholder="Enter Address, zip, city or airport">
+									<span class="form-label">Departure airport</span>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="form-group">
+									<input class="form-control" type="text" id="inputOrigin"
+										placeholder="Enter Address, zip, city or airport" name="'arrive">
+									<span class="form-label">Destination airport</span>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<select class="form-control" name = 'adult'>
+										<option value="0" selected>0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">6</option>
+									</select>
+									<span class="select-arrow"></span>
+									<span class="form-label">Adults</span>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<select class="form-control" name="children">
+										<option value="0" selected>0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">6</option>
+									</select>
+									<span class="select-arrow"></span>
+									<span class="form-label">Children (2-12 years)</span>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<select class="form-control" name="infant_0">
+										<option value="0" selected>0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">6</option>
+									</select>
+									<span class="select-arrow"></span>
+									<span class="form-label">Infants (On Seat)</span>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<select class="form-control" name="infant_1">
+										<option value="0" selected>0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">6</option>
+									</select>
+									<span class="select-arrow"></span>
+									<span class="form-label">Infants (On Lab)</span>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<input class="form-control" type="date" name="d_date" required>
+									<span class="form-label">Departure Date</span>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<input class="form-control" type="date" name="a_date">
+									<span class="form-label">Return Date</span>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<select class="form-control">
+										<option value="economy" selected>Economy</option>
+										<option value="premium economy">Premium Economy</option>
+										<option value="business">Business</option>
+										<option value="first class">First Class</option>
+
+									</select>
+									<span class="select-arrow"></span>
+									<span class="form-label">Travel Class</span>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-btn">
+									<button class="submit-btn">Check availability</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>	
+{% endblock content %}
+	
