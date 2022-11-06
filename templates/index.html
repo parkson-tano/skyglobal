@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="booking" class="section">
+<div id="booking" class="section" style="margin-top: 100px;" >
 	<div class="container">
 		<div class="booking-form">
 			<form id='search' method='POST'>
@@ -38,8 +38,8 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<input class="form-control" type="text" id="inputOrigin"
-								placeholder="Enter Address, zip, city or airport" name="'arrive">
+							<input class="form-control" type="text" id="inputDepart"
+								placeholder="Enter Address, zip, city or airport" name="arrive">
 							<span class="form-label">Destination airport</span>
 						</div>
 					</div>
@@ -48,35 +48,38 @@
 						<div class="row" id="codes" style="display: none">
 							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<input class="form-control" type="text" id="inputOrigin" name="depart"
+									<input class="form-control" type="text" id="" name="originRoute"
 										placeholder="Routing">
 									<span class="form-label">Routing Codes</span>
 								</div>
 							</div>
 							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<input class="form-control" type="text" id="inputOrigin" name="depart"
+									<input class="form-control" type="text" id="" name="originExtension"
 										placeholder="Extension">
 									<span class="form-label">Extension Codes</span>
 								</div>
 							</div>
 							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<input class="form-control" type="text" id="inputOrigin" name="depart"
+									<input class="form-control" type="text" id="" name="departRoute"
 										placeholder="Routing">
 									<span class="form-label">Routing Code</span>
 								</div>
 							</div>
 							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<input class="form-control" type="text" id="inputOrigin" name="depart"
+									<input class="form-control" type="text" id="" name="departExtension"
 										placeholder="Extension">
 									<span class="form-label">Extension Code</span>
 								</div>
 							</div>
 						</div>
-						<input type="button" value="Show Advanced Control" id="show-advanced"
+						<button id="show-advanced"
 							class="btn btn-primary my-3">
+							Show Advanced Control
+						</button>
+						
 					</div>
 					<div class="col-md-6 col-6">
 						<div class="form-group">
@@ -100,7 +103,7 @@
 									<option>XAF</option>
 								</datalist>
 								
-							<input class="form-control"  autoComplete="on" list="suggestions" type="text" id="inputOrigin" placeholder="Currency"
+							<input class="form-control"  autoComplete="on" list="suggestions" type="text" id="" placeholder="Currency"
 								name="Currency">
 							<span class="form-label">Currency</span>
 						</div>
@@ -208,15 +211,15 @@
 							<div class="row" id="multi-row">
 								<div class="col-md-6 col-sm-6">
 									<div class="form-group">
-										<input class="form-control" type="text" id="inputOrigin" name="depart"
+										<input class="form-control" type="text" id="MultiinputOrigin" name="depart"
 											placeholder="Enter Address, zip, city or airport">
 										<span class="form-label">Departure airport</span>
 									</div>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<div class="form-group">
-										<input class="form-control" type="text" id="inputOrigin"
-											placeholder="Enter Address, zip, city or airport" name="'arrive">
+										<input class="form-control" type="text" id="MultiinputDepart"
+											placeholder="Enter Address, zip, city or airport" name="arrive">
 										<span class="form-label">Destination airport</span>
 									</div>
 								</div>
@@ -224,35 +227,36 @@
 									<div class="row" id="codes-multi" style="display: none">
 										<div class="col-md-3 col-6">
 											<div class="form-group">
-												<input class="form-control" type="text" id="inputOrigin" name="depart"
+												<input class="form-control" type="text" id="" name="depart"
 													placeholder="Routing">
 												<span class="form-label">Routing Codes</span>
 											</div>
 										</div>
 										<div class="col-md-3 col-6">
 											<div class="form-group">
-												<input class="form-control" type="text" id="inputOrigin" name="depart"
+												<input class="form-control" type="text" id="" name="depart"
 													placeholder="Extension">
 												<span class="form-label">Extension Codes</span>
 											</div>
 										</div>
 										<div class="col-md-3 col-6">
 											<div class="form-group">
-												<input class="form-control" type="text" id="inputOrigin" name="depart"
+												<input class="form-control" type="text" id="" name="depart"
 													placeholder="Routing">
 												<span class="form-label">Routing Code</span>
 											</div>
 										</div>
 										<div class="col-md-3 col-6">
 											<div class="form-group">
-												<input class="form-control" type="text" id="inputOrigin" name="depart"
+												<input class="form-control" type="text" id="" name="depart"
 													placeholder="Extension">
 												<span class="form-label">Extension Code</span>
 											</div>
 										</div>
 									</div>
-									<input type="button" value="Show Advanced Control" id="show-advanced-multi"
-										class="btn btn-outline-dark my-3">
+									<button id="show-advanced-multi" class="btn btn-primary my-3">
+										Show Advanced Control
+									</button>
 								</div>
 								<div class="col-md-6">
 									<div class="form-group">

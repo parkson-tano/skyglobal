@@ -17,10 +17,12 @@ amadeus = Client(
 )
 
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 
 def origin_airport_search(request):
-    if request.is_ajax():
+    if is_ajax(request=request):
         try:
             data = amadeus.reference_data.locations.get(
                 keyword=request.GET.get('term', None), subType=Location.ANY).data

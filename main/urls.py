@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from .views import *
 
+app_name = 'globalsky'
+
 urlpatterns = [
     path('', index, name='index'),
     path('origin_airport_search/', origin_airport_search,
