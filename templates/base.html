@@ -3,49 +3,90 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>Booking Form HTML Template</title>
+    <title>Booking Form HTML Template</title>
 
-	<!-- Google font -->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,600" rel="stylesheet">
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,600" rel="stylesheet">
 
-	<!-- Bootstrap -->
-	<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <!-- Bootstrap -->
 
-	<!-- Custom stlylesheet -->
-	<link type="text/css" rel="stylesheet" href=" {% static 'css/style.css' %} " />
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-		integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"
-			integrity="sha512-CX7sDOp7UTAq+i1FYIlf9Uo27x4os+kGeoT7rgwvY+4dmjqV0IuE/Bl5hVsjnQPQiTOhAX1O2r2j5bjsFBvv/A=="
-			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-				<script>
-					$(document).ready(function () {
-						$("#inputOrigin").autocomplete({
-							source: "{% url 'origin_airport_search'%}",
-							minLength: 1,
-							delay: 200,
-						});
-					});
-				</script>
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/style.css' %} " />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"
+        integrity="sha512-CX7sDOp7UTAq+i1FYIlf9Uo27x4os+kGeoT7rgwvY+4dmjqV0IuE/Bl5hVsjnQPQiTOhAX1O2r2j5bjsFBvv/A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
     <main>
-        
+
         {% block content %}
-            
+
         {% endblock content %}
-            
+
     </main>
+    <script>
+        $(document).ready(function () {
+            $("#round-trip").click(function () {
+                $("#multi-flight").hide("slow");
+                $("#return-date").removeAttr('disabled');
+            });
+
+
+            $("#one-way").click(function () {
+                $("#return-date").prop('disabled', 'disabled');
+                $("#multi-flight").hide("slow");
+            });
+
+            $("#multi-city").click(function () {
+                $("#multi-flight").show("slow");
+                $("#return-date").removeAttr('disabled');
+
+            });
+            let cloneCount = 1
+            $("#add-row").click(function (event) {
+                event.preventDefault();
+                $("#multi-row").clone()
+                .attr('id', 'multi-row' + cloneCount++)
+                .insertAfter($('[id^=multi-row]:last'));
+            });
+
+            $("#show-advanced").on("click", function (event) {
+                event.preventDefault();
+                $("#codes").toggle("fast");
+                if ($(this).val() == "Hide Advanced Control")
+                    $(this).val("Show Advanced Control");
+                else
+                    $(this).val("Hide Advanced Control");
+            });
+            $("#show-advanced-multi").on("click", function (event) {
+                event.preventDefault();
+                $("#codes-multi").toggle("fast");
+                if ($(this).val() == "Hide Advanced Control")
+                    $(this).val("Show Advanced Control");
+                else
+                    $(this).val("Hide Advanced Control");
+            });
+        });
+
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </body>
-<script src="<https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js>"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
+
 </html>

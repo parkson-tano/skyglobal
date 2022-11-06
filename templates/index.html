@@ -1,144 +1,295 @@
 {% extends 'base.html' %}
 
 {% block content %}
-	<div id="booking" class="section">
-		<div class="section-center">
-			<div class="container">
-				<div class="row">
-					<div class="booking-form">
-						<form id='search' method='POST'>
-							{% csrf_token %}
-							<div class="col-md-2">
-								<div class="form-group">
-									<select class="form-control" name="flighttype">
-										<option value="Round Trip" selected>Round Trip</option>
-										<option value="one way">One Way</option>
-										<option value="multi city">Multi City</option>
-									</select>
-									<span class="select-arrow"></span>
-									<span class="form-label">Flight Type</span>
-								</div>
-							</div>
+<div id="booking" class="section">
+	<div class="container">
+		<div class="booking-form">
+			<form id='search' method='POST'>
+				{% csrf_token %}
+				<div class="row ">
+					<div class="col-md-12">
+						<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+							<li class="nav-item" role="presentation">
+								<button class="nav-link active" id="round-trip" data-bs-toggle="pill" type="button"
+									role="tab" aria-selected="true">
+									Round Trip
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="one-way" data-bs-toggle="pill" type="button"
+									aria-selected="false">
+									One Way
+								</button>
+							</li>
+							<li class="nav-item" role="presentation">
+								<button class="nav-link" id="multi-city" data-bs-toggle="pill" type="button"
+									aria-selected="false">
+									Multi City
+								</button>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<input class="form-control" type="text" id="inputOrigin" name="depart"
+								placeholder="Enter Address, zip, city or airport">
+							<span class="form-label">Departure airport</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<input class="form-control" type="text" id="inputOrigin"
+								placeholder="Enter Address, zip, city or airport" name="'arrive">
+							<span class="form-label">Destination airport</span>
+						</div>
+					</div>
 					
-
-							<div class="col-md-5">
+					<div class="col-md-12">
+						<div class="row" id="codes" style="display: none">
+							<div class="col-md-3 col-6">
 								<div class="form-group">
 									<input class="form-control" type="text" id="inputOrigin" name="depart"
-										placeholder="Enter Address, zip, city or airport">
-									<span class="form-label">Departure airport</span>
+										placeholder="Routing">
+									<span class="form-label">Routing Codes</span>
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<input class="form-control" type="text" id="inputOrigin"
-										placeholder="Enter Address, zip, city or airport" name="'arrive">
-									<span class="form-label">Destination airport</span>
+									<input class="form-control" type="text" id="inputOrigin" name="depart"
+										placeholder="Extension">
+									<span class="form-label">Extension Codes</span>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<select class="form-control" name = 'adult'>
-										<option value="0" selected>0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">6</option>
-									</select>
-									<span class="select-arrow"></span>
-									<span class="form-label">Adults</span>
+									<input class="form-control" type="text" id="inputOrigin" name="depart"
+										placeholder="Routing">
+									<span class="form-label">Routing Code</span>
 								</div>
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<select class="form-control" name="children">
-										<option value="0" selected>0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">6</option>
-									</select>
-									<span class="select-arrow"></span>
-									<span class="form-label">Children (2-12 years)</span>
+									<input class="form-control" type="text" id="inputOrigin" name="depart"
+										placeholder="Extension">
+									<span class="form-label">Extension Code</span>
 								</div>
 							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<select class="form-control" name="infant_0">
-										<option value="0" selected>0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">6</option>
-									</select>
-									<span class="select-arrow"></span>
-									<span class="form-label">Infants (On Seat)</span>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="form-group">
-									<select class="form-control" name="infant_1">
-										<option value="0" selected>0</option>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">6</option>
-									</select>
-									<span class="select-arrow"></span>
-									<span class="form-label">Infants (On Lab)</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<input class="form-control" type="date" name="d_date" required>
-									<span class="form-label">Departure Date</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<input class="form-control" type="date" name="a_date">
-									<span class="form-label">Return Date</span>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<select class="form-control">
-										<option value="economy" selected>Economy</option>
-										<option value="premium economy">Premium Economy</option>
-										<option value="business">Business</option>
-										<option value="first class">First Class</option>
+						</div>
+						<input type="button" value="Show Advanced Control" id="show-advanced"
+							class="btn btn-primary my-3">
+					</div>
+					<div class="col-md-6 col-6">
+						<div class="form-group">
+					
+							<select class="form-control form-control-lg">
+								<option selected>No Limit</option>
+								<option value="">Non Stop Only</option>
+								<option value="">1 stop Max</option>
+								<option value="">2 Stops Max</option>
+							</select>
+							<span class="form-label">Stops</span>
+						</div>
+					</div>
+					<div class="col-md-6 col-6">
+						<div class="form-group">
+							
+								<datalist id="suggestions">
+									<option>USD</option>
+									<option>EUR</option>
+									<option>GPB</option>
+									<option>XAF</option>
+								</datalist>
+								
+							<input class="form-control"  autoComplete="on" list="suggestions" type="text" id="inputOrigin" placeholder="Currency"
+								name="Currency">
+							<span class="form-label">Currency</span>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control" name='adult'>
+								<option value="0" selected>0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">6</option>
+							</select>
+							<span class="select-arrow"></span>
+							<span class="form-label">Adults</span>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control" name="children">
+								<option value="0" selected>0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">6</option>
+							</select>
+							<span class="select-arrow"></span>
+							<span class="form-label">Children (2-12 years)</span>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control" name="infant_0">
+								<option value="0" selected>0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">6</option>
+							</select>
+							<span class="select-arrow"></span>
+							<span class="form-label">Infants (On Seat)</span>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<select class="form-control" name="infant_1">
+								<option value="0" selected>0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">6</option>
+							</select>
+							<span class="select-arrow"></span>
+							<span class="form-label">Infants (On Lab)</span>
+						</div>
+					</div>
+					<hr>
 
-									</select>
-									<span class="select-arrow"></span>
-									<span class="form-label">Travel Class</span>
+					<div class="col-md-4">
+						<div class="form-group">
+							<input class="form-control" type="date" name="d_date" id="depart-date">
+							<span class="form-label">Departure Date</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<input class="form-control" type="date" name="a_date" id="return-date">
+							<span class="form-label">Return Date</span>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<select class="form-control">
+								<option value="economy" selected>Economy</option>
+								<option value="premium economy">Premium Economy</option>
+								<option value="business">Business</option>
+								<option value="first class">First Class</option>
+
+							</select>
+							<span class="select-arrow"></span>
+							<span class="form-label">Travel Class</span>
+						</div>
+					</div>
+
+					<div class="col-md-12" id="multi-flight" style="display: none">
+						<p class="h3">
+							Stop Point
+						</p>
+						<div id="add-city">
+							<button class="btn btn-success my-4" id="add-row">
+								Add Flight
+							</button>
+							<div class="row" id="multi-row">
+								<div class="col-md-6 col-sm-6">
+									<div class="form-group">
+										<input class="form-control" type="text" id="inputOrigin" name="depart"
+											placeholder="Enter Address, zip, city or airport">
+										<span class="form-label">Departure airport</span>
+									</div>
 								</div>
-							</div>
-							<div class="col-md-12">
-								<div class="form-btn">
-									<button class="submit-btn">Check availability</button>
+								<div class="col-md-6 col-sm-6">
+									<div class="form-group">
+										<input class="form-control" type="text" id="inputOrigin"
+											placeholder="Enter Address, zip, city or airport" name="'arrive">
+										<span class="form-label">Destination airport</span>
+									</div>
 								</div>
+								<div class="col-md-12">
+									<div class="row" id="codes-multi" style="display: none">
+										<div class="col-md-3 col-6">
+											<div class="form-group">
+												<input class="form-control" type="text" id="inputOrigin" name="depart"
+													placeholder="Routing">
+												<span class="form-label">Routing Codes</span>
+											</div>
+										</div>
+										<div class="col-md-3 col-6">
+											<div class="form-group">
+												<input class="form-control" type="text" id="inputOrigin" name="depart"
+													placeholder="Extension">
+												<span class="form-label">Extension Codes</span>
+											</div>
+										</div>
+										<div class="col-md-3 col-6">
+											<div class="form-group">
+												<input class="form-control" type="text" id="inputOrigin" name="depart"
+													placeholder="Routing">
+												<span class="form-label">Routing Code</span>
+											</div>
+										</div>
+										<div class="col-md-3 col-6">
+											<div class="form-group">
+												<input class="form-control" type="text" id="inputOrigin" name="depart"
+													placeholder="Extension">
+												<span class="form-label">Extension Code</span>
+											</div>
+										</div>
+									</div>
+									<input type="button" value="Show Advanced Control" id="show-advanced-multi"
+										class="btn btn-outline-dark my-3">
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<input class="form-control" type="date" name="d_date">
+										<span class="form-label">Departure Date</span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<input class="form-control" type="date" name="a_date">
+										<span class="form-label">Return Date</span>
+									</div>
+								</div>
+								<hr>
 							</div>
-						</form>
+							<hr>
+
+
+						</div>
+
+
+					</div>
+					<div class="col-md-12">
+						<div class="form-btn">
+							<button class="submit-btn">Check availability</button>
+						</div>
 					</div>
 				</div>
-			</div>
+			</form>
+
 		</div>
 	</div>
+</div>
+</div>
 
 
 </body>
 
-</html>	
+</html>
 {% endblock content %}
-	
