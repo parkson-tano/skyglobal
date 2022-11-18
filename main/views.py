@@ -38,9 +38,10 @@ def get_city_airport_list(data):
     result = list(dict.fromkeys(result))
     return json.dumps(result)
 
+
 def index(request):
     return render(request, 'index.html')
-    
+
 
 def select_destination(req, param):
     if req.method == "GET":
@@ -56,19 +57,56 @@ def select_destination(req, param):
         return JsonResponse({"error": "Invalid request method"})
 
 
-def search_offers(req):
-    if req.method == "GET":
+def search_offers(request):
+    if request.method == "POST":
         try:
-            origin_code = req.GET["originCode"]
-            destination_code = req.GET["destinationCode"]
-            departure_date = req.GET["departureDate"]
-            response = amadeus.shopping.flight_offers_search.get(
-    originLocationCode=origin_code,
-    destinationLocationCode=destination_code,
-    departureDate=departure_date, adults=1)
-            context = {
-    "data": response.data }
-            return JsonResponse(context)
+            origin_code = request.POST["Origin"]
+            destination_code = request.POST["Destination"]
+            departure_date = request.POST["Departuredate"]  
+            return_date = ''  
+            if "Returndate" in request.POST:
+                return_date = request.POST["Returndate"]
+            if request.POST['Adults'] == '0':
+                adults = 1
+            else:
+                adults = request.POST['Adults']
+            children = request.POST['Children']
+            infant_seat = request.POST['Infant_0']
+            travel_class = request.POST['Travelclass']
+            if return_date == '':
+                response = amadeus.shopping.flight_offers_search.get(
+                    originLocationCode=origin_code[:3],
+                    destinationLocationCode=destination_code[:3],
+                    departureDate=departure_date,
+                    adults=adults,
+                    children=children,
+                    infants=infant_seat,
+                    travelClass=travel_class,
+                )
+                context = {
+                    "data": response.data,
+                    'origin': origin_code,
+                    'destination': destination_code
+                }
+            else:
+                response = amadeus.shopping.flight_offers_search.get(
+                    originLocationCode=origin_code[:3],
+                    destinationLocationCode=destination_code[:3],
+                    departureDate=departure_date,
+                    returnDate = return_date,
+                    adults=adults,
+                    children=children,
+                    infants=infant_seat,
+                    travelClass=travel_class,
+                )
+                context = {
+                    "data": response.data,
+                    'origin': origin_code,
+                    'destination': destination_code
+                }
+            print(context)
+            # return JsonResponse(context)
+            return render(request, 'search.html', context=context)
         except ResponseError as error:
             print(error)
     else:

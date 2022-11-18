@@ -4,7 +4,7 @@
 <div id="booking" class="section" style="margin-top: 100px;" >
 	<div class="container">
 		<div class="booking-form">
-			<form id='search' method='POST'>
+			<form id='search' method='post' action="{% url 'globalsky:search_offers' %}">
 				{% csrf_token %}
 				<div class="row ">
 					<div class="col-md-12">
@@ -31,7 +31,7 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<input class="form-control" type="text" id="inputOrigin" name="depart"
+							<input class="form-control" type="text" id="inputOrigin" name="Origin"
 								placeholder="Enter Address, zip, city or airport">
 							<span class="form-label">Departure airport</span>
 						</div>
@@ -39,7 +39,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<input class="form-control" type="text" id="inputDepart"
-								placeholder="Enter Address, zip, city or airport" name="arrive">
+								placeholder="Enter Address, zip, city or airport" name="Destination">
 							<span class="form-label">Destination airport</span>
 						</div>
 					</div>
@@ -62,14 +62,14 @@
 							</div>
 							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<input class="form-control" type="text" id="" name="departRoute"
+									<input class="form-control" type="text" id="" name="DestinationRoute"
 										placeholder="Routing">
 									<span class="form-label">Routing Code</span>
 								</div>
 							</div>
 							<div class="col-md-3 col-6">
 								<div class="form-group">
-									<input class="form-control" type="text" id="" name="departExtension"
+									<input class="form-control" type="text" id="" name="DestinationExtension"
 										placeholder="Extension">
 									<span class="form-label">Extension Code</span>
 								</div>
@@ -84,7 +84,7 @@
 					<div class="col-md-6 col-6">
 						<div class="form-group">
 					
-							<select class="form-control form-control-lg">
+							<select class="form-control form-control-lg" name='stop'>
 								<option selected>No Limit</option>
 								<option value="">Non Stop Only</option>
 								<option value="">1 stop Max</option>
@@ -110,7 +110,7 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<select class="form-control" name='adult'>
+							<select class="form-control" name='Adults'>
 								<option value="0" selected>0</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -126,7 +126,7 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<select class="form-control" name="children">
+							<select class="form-control" name="Children">
 								<option value="0" selected>0</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -142,7 +142,7 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<select class="form-control" name="infant_0">
+							<select class="form-control" name="Infant_0">
 								<option value="0" selected>0</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -158,7 +158,7 @@
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<select class="form-control" name="infant_1">
+							<select class="form-control" name="Infant_1">
 								<option value="0" selected>0</option>
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -176,23 +176,23 @@
 
 					<div class="col-md-4">
 						<div class="form-group">
-							<input class="form-control" type="date" name="d_date" id="depart-date">
+							<input class="form-control" type="date" name="Departuredate" id="depart-date">
 							<span class="form-label">Departure Date</span>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<input class="form-control" type="date" name="a_date" id="return-date">
+							<input class="form-control" type="date" name="Returndate" id="return-date">
 							<span class="form-label">Return Date</span>
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
-							<select class="form-control">
-								<option value="economy" selected>Economy</option>
-								<option value="premium economy">Premium Economy</option>
-								<option value="business">Business</option>
-								<option value="first class">First Class</option>
+							<select class="form-control" name ='Travelclass'>
+								<option value="ECONOMY" selected>Economy</option>
+								<option value="PREMIUM_ECONOMY">Premium Economy</option>
+								<option value="BUSINESS">Business</option>
+								<option value="FIRST">First Class</option>
 
 							</select>
 							<span class="select-arrow"></span>
@@ -294,7 +294,4 @@
 </div>
 
 
-</body>
-
-</html>
 {% endblock content %}

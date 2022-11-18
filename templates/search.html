@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<nav class="navbar bg-light">
+    <div class="container-fluid">
+        {{origin}} --> {{destination}}
+    </div>
+</nav>
+<div class="container">
+<div class="row">
+    <div class="col-md-3">
+        <h3>
+            Filter
+        </h3>
+    </div>
+    <div class="col-md-9">
+        <h3>Search Result</h3>
+       
+       {% for flight in data %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col"></div>
+                    <div class="col">
+                        
+                        {% for dat in flight.itineraries %}
+                            {{dat.segments|length}}
+                        {% endfor %}
+                            
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+        </div>
+       {% endfor %}
+        
+    </div>
+</div>
+
+</div>
+
+
+
+{% endblock content %}
