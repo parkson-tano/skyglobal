@@ -143,6 +143,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-GDAL_LIBRARY_PATH = r'C:\Users\Daniel\Desktop\project\pata\env\Lib\site-packages\osgeo\gdal304.dll'
-GEOS_LIBRARY_PATH = r'C:\Users\Daniel\Desktop\project\pata\env\Lib\site-packages\osgeo\geos_c.dll'
- 
+CSRF_TRUSTED_ORIGINS = [
+    'https://globalskyscan.com'
+    'https://www.globalskyscan.com',
+    'https://*.globalskyscan.com',
+    'https://*.127.0.0.1',
+    'http://globalskyscan.com',
+]
