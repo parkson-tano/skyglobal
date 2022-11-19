@@ -17,282 +17,283 @@
 	</div>
 	<div class="search-flight">
 		<div class="container">
-			<form class="search-flight-form" method="POST" action="{% url 'globalsky:search_offers' %}">
-				{% csrf_token %}
-				<div class="align-items-center">
-					<div class="search-flight-form-data">
-						<div class="input-row" style="display: flex;">
+			<div>
+<form class="search-flight-form" method="POST" action="{% url 'globalsky:search_offers' %}">
+	{% csrf_token %}
+	<div class="align-items-center">
+		<div class="search-flight-form-data">
+			<div class="input-row" style="display: flex;">
 
-							<div class="form-check-inline">
-								<label class="form-check-label">
-									<input type="radio" class="form-check-input trip-type" id="round-trip"
-										name="TripType" value="1" checked>Round Trip
-								</label>
-							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label">
-									<input type="radio" class="form-check-input trip-type" id="one-way" name="TripType"
-										value="2">One-way
-								</label>
-							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label">
-									<input type="radio" class="form-check-input trip-type" id="multi-city"
-										name="TripType" value="3">Multi City
-								</label>
-							</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="radio" class="form-check-input trip-type" id="round-trip" name="TripType" value="1"
+							checked>Round Trip
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="radio" class="form-check-input trip-type" id="one-way" name="TripType"
+							value="2">One-way
+					</label>
+				</div>
+				<div class="form-check-inline">
+					<label class="form-check-label">
+						<input type="radio" class="form-check-input trip-type" id="multi-city" name="TripType"
+							value="3">Multi City
+					</label>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<input class="form-control" type="text" id="inputOrigin" name="Origin"
+						placeholder="Enter Address, zip, city or airport">
+					<span class="form-label">Departure airport</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<input class="form-control" type="text" id="inputDepart"
+						placeholder="Enter Address, zip, city or airport" name="Destination">
+					<span class="form-label">Destination airport</span>
+				</div>
+			</div>
+
+			<div class="input-row">
+				<div class="row" id="codes" style="display: none">
+					<div class="input-row">
+						<div class="form-group">
+							<input class="form-control" type="text" id="" name="originRoute" placeholder="Routing">
+							<span class="form-label">Routing Codes</span>
 						</div>
+					</div>
+					<div class="input-row">
+						<div class="form-group">
+							<input class="form-control" type="text" id="" name="originExtension"
+								placeholder="Extension">
+							<span class="form-label">Extension Codes</span>
+						</div>
+					</div>
+					<div class="input-row">
+						<div class="form-group">
+							<input class="form-control" type="text" id="" name="DestinationRoute" placeholder="Routing">
+							<span class="form-label">Routing Code</span>
+						</div>
+					</div>
+					<div class="input-row">
+						<div class="form-group">
+							<input class="form-control" type="text" id="" name="DestinationExtension"
+								placeholder="Extension">
+							<span class="form-label">Extension Code</span>
+						</div>
+					</div>
+				</div>
+				<button id="show-advanced" class="btn btn-primary my-3">
+					Show Advanced Control
+				</button>
+
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+
+					<select class="form-control form-control-lg" name='stops'>
+						<option selected>No Limit</option>
+						<option value="">Non Stop Only</option>
+						<option value="">1 stop Max</option>
+						<option value="">2 Stops Max</option>
+					</select>
+					<span class="form-label">Stops</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+
+					<datalist id="suggestions">
+						<option>USD</option>
+						<option>EUR</option>
+						<option>GPB</option>
+						<option>XAF</option>
+					</datalist>
+
+					<input class="form-control" autoComplete="on" list="suggestions" type="text" id=""
+						placeholder="Currency" name="Currency">
+					<span class="form-label">Currency</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<select class="form-control" name='Adults'>
+						<option value="0" selected>0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+					</select>
+					<span class="select-arrow"></span>
+					<span class="form-label">Adults</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<select class="form-control" name="Children">
+						<option value="0" selected>0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+					</select>
+					<span class="select-arrow"></span>
+					<span class="form-label">Children (2-12 years)</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<select class="form-control" name="Infant_0">
+						<option value="0" selected>0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+					</select>
+					<span class="select-arrow"></span>
+					<span class="form-label">Infants (On Seat)</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<select class="form-control" name="Infant_1">
+						<option value="0" selected>0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+					</select>
+					<span class="select-arrow"></span>
+					<span class="form-label">Infants (On Lab)</span>
+				</div>
+			</div>
+			<hr>
+
+			<div class="input-row">
+				<div class="form-group">
+					<input class="form-control" type="date" name="Departuredate" id="depart-date">
+					<span class="form-label">Departure Date</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<input class="form-control" type="date" name="Returndate" id="return-date">
+					<span class="form-label">Return Date</span>
+				</div>
+			</div>
+			<div class="input-row">
+				<div class="form-group">
+					<select class="form-control" name='Travelclass'>
+						<option value="ECONOMY" selected>Economy</option>
+						<option value="PREMIUM_ECONOMY">Premium Economy</option>
+						<option value="BUSINESS">Business</option>
+						<option value="FIRST">First Class</option>
+
+					</select>
+					<span class="select-arrow"></span>
+					<span class="form-label">Travel Class</span>
+				</div>
+			</div>
+
+			<div class="input-row" id="multi-flight" style="display: none">
+				<p class="h3">
+					Stop Point
+				</p>
+				<div id="add-city">
+					<button class="btn btn-success my-4" id="add-row">
+						Add Flight
+					</button>
+					<div class="row" id="multi-row">
 						<div class="input-row">
 							<div class="form-group">
-								<input class="form-control" type="text" id="inputOrigin" name="Origin"
+								<input class="form-control" type="text" id="multiinputOrigin" name="depart"
 									placeholder="Enter Address, zip, city or airport">
 								<span class="form-label">Departure airport</span>
 							</div>
 						</div>
 						<div class="input-row">
 							<div class="form-group">
-								<input class="form-control" type="text" id="inputDepart"
-									placeholder="Enter Address, zip, city or airport" name="Destination">
+								<input class="form-control" type="text" id="multiinputDepart"
+									placeholder="Enter Address, zip, city or airport" name="arrive">
 								<span class="form-label">Destination airport</span>
 							</div>
 						</div>
 
 						<div class="input-row">
-							<div class="row" id="codes" style="display: none">
+							<div class="row" id="codes-multi" style="display: none">
 								<div class="input-row">
 									<div class="form-group">
-										<input class="form-control" type="text" id="" name="originRoute"
+										<input class="form-control" type="text" id="" name="depart"
 											placeholder="Routing">
 										<span class="form-label">Routing Codes</span>
 									</div>
 								</div>
 								<div class="input-row">
 									<div class="form-group">
-										<input class="form-control" type="text" id="" name="originExtension"
+										<input class="form-control" type="text" id="" name="depart"
 											placeholder="Extension">
 										<span class="form-label">Extension Codes</span>
 									</div>
 								</div>
 								<div class="input-row">
 									<div class="form-group">
-										<input class="form-control" type="text" id="" name="DestinationRoute"
+										<input class="form-control" type="text" id="" name="depart"
 											placeholder="Routing">
 										<span class="form-label">Routing Code</span>
 									</div>
 								</div>
 								<div class="input-row">
 									<div class="form-group">
-										<input class="form-control" type="text" id="" name="DestinationExtension"
+										<input class="form-control" type="text" id="" name="depart"
 											placeholder="Extension">
 										<span class="form-label">Extension Code</span>
 									</div>
 								</div>
 							</div>
-							<button id="show-advanced" class="btn btn-primary my-3">
+							<button id="show-advanced-multi" class="btn btn-primary my-3">
 								Show Advanced Control
 							</button>
-
 						</div>
 						<div class="input-row">
 							<div class="form-group">
-
-								<select class="form-control form-control-lg" name='stops'>
-									<option selected>No Limit</option>
-									<option value="">Non Stop Only</option>
-									<option value="">1 stop Max</option>
-									<option value="">2 Stops Max</option>
-								</select>
-								<span class="form-label">Stops</span>
-							</div>
-						</div>
-						<div class="input-row">
-							<div class="form-group">
-
-								<datalist id="suggestions">
-									<option>USD</option>
-									<option>EUR</option>
-									<option>GPB</option>
-									<option>XAF</option>
-								</datalist>
-
-								<input class="form-control" autoComplete="on" list="suggestions" type="text" id=""
-									placeholder="Currency" name="Currency">
-								<span class="form-label">Currency</span>
-							</div>
-						</div>
-						<div class="input-row">
-							<div class="form-group">
-								<select class="form-control" name='Adults'>
-									<option value="0" selected>0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-								</select>
-								<span class="select-arrow"></span>
-								<span class="form-label">Adults</span>
-							</div>
-						</div>
-						<div class="input-row">
-							<div class="form-group">
-								<select class="form-control" name="Children">
-									<option value="0" selected>0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-								</select>
-								<span class="select-arrow"></span>
-								<span class="form-label">Children (2-12 years)</span>
-							</div>
-						</div>
-						<div class="input-row">
-							<div class="form-group">
-								<select class="form-control" name="Infant_0">
-									<option value="0" selected>0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-								</select>
-								<span class="select-arrow"></span>
-								<span class="form-label">Infants (On Seat)</span>
-							</div>
-						</div>
-						<div class="input-row">
-							<div class="form-group">
-								<select class="form-control" name="Infant_1">
-									<option value="0" selected>0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-								</select>
-								<span class="select-arrow"></span>
-								<span class="form-label">Infants (On Lab)</span>
-							</div>
-						</div>
-						<hr>
-
-						<div class="input-row">
-							<div class="form-group">
-								<input class="form-control" type="date" name="Departuredate" id="depart-date">
+								<input class="form-control" type="date" name="d_date">
 								<span class="form-label">Departure Date</span>
 							</div>
 						</div>
 						<div class="input-row">
 							<div class="form-group">
-								<input class="form-control" type="date" name="Returndate" id="return-date">
+								<input class="form-control" type="date" name="a_date">
 								<span class="form-label">Return Date</span>
 							</div>
 						</div>
-						<div class="input-row">
-							<div class="form-group">
-								<select class="form-control" name='Travelclass'>
-									<option value="ECONOMY" selected>Economy</option>
-									<option value="PREMIUM_ECONOMY">Premium Economy</option>
-									<option value="BUSINESS">Business</option>
-									<option value="FIRST">First Class</option>
-
-								</select>
-								<span class="select-arrow"></span>
-								<span class="form-label">Travel Class</span>
-							</div>
-						</div>
-
-						<div class="input-row" id="multi-flight" style="display: none">
-							<p class="h3">
-								Stop Point
-							</p>
-							<div id="add-city">
-								<button class="btn btn-success my-4" id="add-row">
-									Add Flight
-								</button>
-								<div class="row" id="multi-row">
-									<div class="input-row">
-										<div class="form-group">
-											<input class="form-control" type="text" id="multiinputOrigin" name="depart"
-												placeholder="Enter Address, zip, city or airport">
-											<span class="form-label">Departure airport</span>
-										</div>
-									</div>
-									<div class="input-row">
-										<div class="form-group">
-											<input class="form-control" type="text" id="multiinputDepart"
-												placeholder="Enter Address, zip, city or airport" name="arrive">
-											<span class="form-label">Destination airport</span>
-										</div>
-									</div>
-
-									<div class="input-row">
-										<div class="row" id="codes-multi" style="display: none">
-											<div class="input-row">
-												<div class="form-group">
-													<input class="form-control" type="text" id="" name="depart"
-														placeholder="Routing">
-													<span class="form-label">Routing Codes</span>
-												</div>
-											</div>
-											<div class="input-row">
-												<div class="form-group">
-													<input class="form-control" type="text" id="" name="depart"
-														placeholder="Extension">
-													<span class="form-label">Extension Codes</span>
-												</div>
-											</div>
-											<div class="input-row">
-												<div class="form-group">
-													<input class="form-control" type="text" id="" name="depart"
-														placeholder="Routing">
-													<span class="form-label">Routing Code</span>
-												</div>
-											</div>
-											<div class="input-row">
-												<div class="form-group">
-													<input class="form-control" type="text" id="" name="depart"
-														placeholder="Extension">
-													<span class="form-label">Extension Code</span>
-												</div>
-											</div>
-										</div>
-										<button id="show-advanced-multi" class="btn btn-primary my-3">
-											Show Advanced Control
-										</button>
-									</div>
-									<div class="input-row">
-										<div class="form-group">
-											<input class="form-control" type="date" name="d_date">
-											<span class="form-label">Departure Date</span>
-										</div>
-									</div>
-									<div class="input-row">
-										<div class="form-group">
-											<input class="form-control" type="date" name="a_date">
-											<span class="form-label">Return Date</span>
-										</div>
-									</div>
-									<hr>
-								</div>
-							</div>
-						</div>
-						<div class="input-row">
-							<button type="submit" class="btn btn-danger">Search Flight</button>
-						</div>
+						<hr>
 					</div>
 				</div>
-			</form>
+			</div>
+			<div class="input-row">
+				<button type="submit" class="btn btn-danger">Search Flight</button>
+			</div>
+		</div>
+	</div>
+</form>
+			</div>
+			
 		</div>
 	</div>
 </section>
