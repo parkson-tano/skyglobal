@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.views.generic import (CreateView, DetailView, FormView, ListView,
                                   TemplateView, View)
-
+import datetime
 amadeus = Client(
     client_id='G10V3YXxeLaBSrVDLfVj0qAGIxS1BRHA',
     client_secret='01neJa0qM0djzTma'
@@ -63,7 +63,8 @@ def search_offers(request):
             origin_code = request.POST["Origin"]
             destination_code = request.POST["Destination"]
             departure_date = request.POST["Departuredate"]  
-            return_date = ''  
+            trip_type = request.POST["TripType"] 
+            return_date = '' 
             if "Returndate" in request.POST:
                 return_date = request.POST["Returndate"]
             if request.POST['Adults'] == '0':
@@ -86,7 +87,8 @@ def search_offers(request):
                 context = {
                     "data": response.data,
                     'origin': origin_code,
-                    'destination': destination_code
+                    'destination': destination_code,
+                    'depart_time':datetime.datetime.strptime(departure_date, '%Y-%m-%d'), 
                 }
             else:
                 response = amadeus.shopping.flight_offers_search.get(
@@ -102,7 +104,10 @@ def search_offers(request):
                 context = {
                     "data": response.data,
                     'origin': origin_code,
-                    'destination': destination_code
+                    'destination': destination_code,
+                    'depart_date':datetime.datetime.strptime(departure_date, '%Y-%m-%d'), 
+                    'return_date':datetime.datetime.strptime(return_date, '%Y-%m-%d'), 
+                    'seat': travel_class
                 }
             print(context)
             # return JsonResponse(context)
