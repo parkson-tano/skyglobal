@@ -46,14 +46,14 @@
 			<div class="input-row">
 				<div class="form-group">
 					<input class="form-control" type="text" id="inputOrigin" name="Origin"
-						placeholder="Enter Address, zip, city or airport">
+						placeholder="Enter Address, zip, city or airport" required>
 					<span class="form-label">Departure airport</span>
 				</div>
 			</div>
 			<div class="input-row">
 				<div class="form-group">
 					<input class="form-control" type="text" id="inputDepart"
-						placeholder="Enter Address, zip, city or airport" name="Destination">
+						placeholder="Enter Address, zip, city or airport" name="Destination" required>
 					<span class="form-label">Destination airport</span>
 				</div>
 			</div>
@@ -95,11 +95,11 @@
 			<div class="input-row">
 				<div class="form-group">
 
-					<select class="form-control form-control-lg" name='stops'>
-						<option selected>No Limit</option>
-						<option value="">Non Stop Only</option>
-						<option value="">1 stop Max</option>
-						<option value="">2 Stops Max</option>
+					<select class="form-control form-control-lg" name='Stops'>
+						<option value="3" selected>No Limit</option>
+						<option value="0">Non Stop Only</option>
+						<option value="1">1 stop Max</option>
+						<option value="2">2 Stops Max</option>
 					</select>
 					<span class="form-label">Stops</span>
 				</div>
@@ -187,7 +187,7 @@
 
 			<div class="input-row">
 				<div class="form-group">
-					<input class="form-control" type="date" name="Departuredate" id="depart-date">
+					<input class="form-control" type="date" name="Departuredate" id="depart-date" required>
 					<span class="form-label">Departure Date</span>
 				</div>
 			</div>

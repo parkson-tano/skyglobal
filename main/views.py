@@ -64,6 +64,7 @@ def search_offers(request):
             destination_code = request.POST["Destination"]
             departure_date = request.POST["Departuredate"]  
             trip_type = request.POST["TripType"] 
+            stops = request.POST['Stops']
             return_date = '' 
             if "Returndate" in request.POST:
                 return_date = request.POST["Returndate"]
@@ -74,6 +75,7 @@ def search_offers(request):
             children = request.POST['Children']
             infant_seat = request.POST['Infant_0']
             travel_class = request.POST['Travelclass']
+            currency = request.POST['Currency']
             if return_date == '':
                 response = amadeus.shopping.flight_offers_search.get(
                     originLocationCode=origin_code[:3],
@@ -84,11 +86,45 @@ def search_offers(request):
                     infants=infant_seat,
                     travelClass=travel_class,
                 )
+                price = []
+                data = []
+                p = []
+                seg = []
+                if stops == '0':
+                    for i in response.data:
+                        if i['oneWay'] != 'false':
+                            data.append(i)
+                elif stops == '1':
+                    for i in response.data:
+                        p.append(i['itineraries'])
+                        for y in p:
+                            seg.append(y[0])
+                        if len(y[0]['segments']) <=1:
+                            data.append(i)
+                elif stops == '2':
+                    for i in response.data:
+                        p.append(i['itineraries'])
+                        for y in p:
+                            seg.append(y[0])
+                        if len(y[0]['segments']) <=2:
+                            data.append(i)
+                else:
+                    data = response.data
+                for i in data:
+                    price.append(float(i['price']['grandTotal']))
+                
+                max_price = max(price)
+                min_price = min(price)
+
                 context = {
-                    "data": response.data,
+                    "data": data,
                     'origin': origin_code,
                     'destination': destination_code,
-                    'depart_time':datetime.datetime.strptime(departure_date, '%Y-%m-%d'), 
+                    'depart_date':datetime.datetime.strptime(departure_date, '%Y-%m-%d'), 
+                    'currency' : currency,
+                    'seat': travel_class,
+                    'max_price': max_price,
+                    'min_price': min_price,
                 }
             else:
                 response = amadeus.shopping.flight_offers_search.get(
@@ -101,14 +137,22 @@ def search_offers(request):
                     infants=infant_seat,
                     travelClass=travel_class,
                 )
+                for i in response.data:
+                    price.append(float(i['price']['grandTotal']))
+                
+                max_price = max(price)
+                min_price = min(price)
                 context = {
                     "data": response.data,
                     'origin': origin_code,
                     'destination': destination_code,
                     'depart_date':datetime.datetime.strptime(departure_date, '%Y-%m-%d'), 
                     'return_date':datetime.datetime.strptime(return_date, '%Y-%m-%d'), 
-                    'seat': travel_class
-                }
+                    'seat': travel_class,
+                    'currency' : currency,
+                     'max_price': max_price,
+                    'min_price': min_price,
+                                    }
             print(context)
             # return JsonResponse(context)
             return render(request, 'search.html', context=context)
