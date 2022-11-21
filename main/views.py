@@ -125,6 +125,7 @@ def search_offers(request):
                     'seat': travel_class,
                     'max_price': max_price,
                     'min_price': min_price,
+                    'trip_type':trip_type,
                 }
             else:
                 response = amadeus.shopping.flight_offers_search.get(
@@ -152,6 +153,7 @@ def search_offers(request):
                     'currency' : currency,
                      'max_price': max_price,
                     'min_price': min_price,
+                    'trip_type': trip_type,
                                     }
             print(context)
             # return JsonResponse(context)
