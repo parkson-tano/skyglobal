@@ -9,12 +9,10 @@
   <link rel="stylesheet" href="https://use.typekit.net/cav5lva.css">
   <link rel="stylesheet" href="{% static 'css/layout_style.css' %}">
   <link rel="icon" type="image/ico" href="/static/img/favicon.ico">
-      <link type="text/css" rel="stylesheet" href=" {% static 'css/style.css' %} " />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.js"
         integrity="sha512-CX7sDOp7UTAq+i1FYIlf9Uo27x4os+kGeoT7rgwvY+4dmjqV0IuE/Bl5hVsjnQPQiTOhAX1O2r2j5bjsFBvv/A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
@@ -27,9 +25,9 @@
 <body>
   {% block parentBody %}
   {% endblock %}
-  <div class="container-fluid" >
+  <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="">
           <img src="{% static 'img/icon_logo.png' %}" height="34" alt="">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,10 +37,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item {% if not page %}active{% endif %}">
-            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="">Home</a>
           </li>
           <li class="nav-item {% if page == 'bookings' %}active{% endif %}">
-            <a class="nav-link" href="#">My Bookings</a>
+            <a class="nav-link" href="">My Bookings</a>
           </li>
         </ul>
         <ul class="navbar-nav">
@@ -74,7 +72,7 @@
                   </div>
                 </div>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'logout' %}">
+                <a class="dropdown-item" href="">
                   <svg width="1.1em" height="1.1em" viewBox="0 1.5 16 16" class="bi bi-power" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M5.578 4.437a5 5 0 1 0 4.922.044l.5-.866a6 6 0 1 1-5.908-.053l.486.875z"/>
                     <path fill-rule="evenodd" d="M7.5 8V1h1v7h-1z"/>
@@ -89,10 +87,7 @@
     </nav>
 
     <main>
-      <div class='container-fluid'>
-
       {% block body %}{% endblock %}
-      </div>
     </main>
 
     <footer>
@@ -107,7 +102,7 @@
                 <ul class="link-list">
                   <li class="list-item"><a class="footer-links" href="">Contact Us</a></li>
                   <li class="list-item"><a class="footer-links" href="">About Us</a></li>
-                  <li class="list-item"><a class="footer-links" href="">Privacy Policy</a></li>
+                  <li class="list-item"><a class="footer-links" href=""">Privacy Policy</a></li>
                   <li class="list-item"><a class="footer-links" href="">Terms &amp; Conditions</a></li>
                 </ul>
               </div>
@@ -155,7 +150,7 @@
       </div>
     </footer>
   </div>
- <script>
+   <script>
         $(document).ready(function () {
             $("#inputOrigin").autocomplete({
                 source: "{% url 'globalsky:origin_airport_search'%}",
@@ -217,6 +212,5 @@
            
         });
     </script>
-
 </body>
 </html>
