@@ -134,12 +134,12 @@
                 </div>
             </div>
         </div>
-        {% if trip_type == '2' and flights %}
+        {% if trip_type == '2' and data %}
             <div class="query-trip-type-div">
                 <div class="tabs">
                     <div class="selector"></div>
-                    <a href="#" class="active-div" data-trip_type="1">{{origin.code}} &#8594; {{destination.code}}</a>
-                    <a href="#" data-trip_type="2">{{origin2.code}} &#8594; {{destination2.code}}</a>
+                    <a href="#" class="active-div" data-trip_type="1">{{origin|slice:":3"}} &#8594; {{destination|slice:":3"}}</a>
+                    <a href="#" data-trip_type="2">{{destination|slice:":3"}} &#8594; {{origin|slice:":3"}}</a>
                 </div>
                 <!--<div>
                     <div id="flight1-btn-div" class="active-div" data-trip_type="1" onclick="trip_type_flight(this)">
@@ -162,7 +162,7 @@
         <div class="query-result-div">
             <div class="container">
                 <div class="row">
-                    {% if flights %}
+                    {% if data %}
                         <div class="col-lg-3 filter-div">
                             <div class="close-filter" style="margin-top: 0;">
                                 <button class="btn b1" onclick="close_filter(this)">
@@ -182,11 +182,11 @@
                                             <input type="range" class="form-control-range" min="{{min_price}}" max="{{max_price}}" value="{{max_price}}" oninput="filter()">
                                             <div class="price-range-output">
                                                 <div class="initial-price-range">
-                                                    <span class="currency-symbol">₹</span>
+                                                    <span class="currency-symbol">{{currency}}</span>
                                                     <span class="initial-price-value">{{min_price}}</span>
                                                 </div>
                                                 <div class="final-price-range">
-                                                    <span class="currency-symbol">₹</span>
+                                                    <span class="currency-symbol">{{currency}}</span>
                                                     <span class="final-price-value"></span>
                                                 </div>
                                             </div>
@@ -359,42 +359,157 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.5em" height="1.3em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 440 384"><path d="M14 335h405v43H14v-43zm417.5-199.5q3.5 12.5-3 24T409 175l-114 30l-92 25l-114 30l-34 10l-16-29l-39-67l31-9l42 33l106-28L91 17l41-11l147 137l113-30q13-4 24.5 3t15 19.5z" fill="#434445"/><rect x="0" y="0" width="440" height="384" fill="rgba(0, 0, 0, 0)" /></svg>
                                                 </div>
                                                 <div class="company-details">
-                                                    <div class="company-name">{{flight.airline}}</div>
-                                                    <div class="plane-name">{{flight.plane}}</div>
+                                                    <div class="company-name">
+                                                        
+                                                        {% if trip_type == '1' %}
+                                                             {% for inf in flight.itineraries %}
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == 1 %}
+                                                {{info.id}}
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endfor %}
+                                                {% else %}
+                                                {% for inf in flight.itineraries %}
+                                                
+                                                {% if forloop.counter == 1 %}
+                                                    
+                                              
+                                                    
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == 1 %}
+                                                {{info.id}}
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                  {% endif %}
+                                                {% endfor %}
+                                                        {% endif %}
+                                                            
+                                                       
+                                                    </div>
+                                                    <div class="plane-name">
+                                                        
+                                                        {% if trip_type == 1 %}
+                                                          
+                                                {% else %}
+
+                                                        {% endif %}
+                                                            
+                                                 {% for inf in flight.itineraries %}
+                                                 
+                                                 {% if forloop.counter == 1 %}
+                                                    
+                                            
+                                                    
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == 1 %}
+                                                {{info.carrierCode}} {{info.aircraft.code}}
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% endfor %}                                                       
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="flight-time flight-time-div">
                                                 <div class="flight-origin-time">
                                                     <div class="flight-time">
-                                                        <h5>{{flight.depart_time|time:"H:i"}}</h5>
+                                                       {% if trip_type == '1' %}
+                                                           {% for inf in flight.itineraries %}
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == inf.segments|length %}
+                                                <h5>{{info.arrival.at|slice:"11:16"}}</h5>
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endfor %}
+                                                {% else %}
+                                                {% for inf in flight.itineraries %}
+                                                {% if forloop.counter == 1 %}
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == inf.segments|length %}
+                                                <h5>{{info.departure.at|slice:"11:16"}}</h5>
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% endfor %} 
+                                                        {% endif %}
                                                     </div>
                                                     <div class="flight-place">
-                                                        {{flight.origin.city}}
+                                                        {{origin|slice:"4:"}}
                                                     </div>
                                                 </div>
                                                 <div class="flight-stops tooltip">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" viewBox="0 0 24 24">
-                                                        <path d="M13,9.03544443 C14.6961471,9.27805926 16,10.736764 16,12.5 C16,14.263236 14.6961471,15.7219407 13,15.9645556 L13,21.5207973 C13,21.7969397 12.7761424,22.0207973 12.5,22.0207973 C12.2238576,22.0207973 12,21.7969397 12,21.5207973 L12,15.9645556 C10.3038529,15.7219407 9,14.263236 9,12.5 C9,10.736764 10.3038529,9.27805926 12,9.03544443 L12,3.5 C12,3.22385763 12.2238576,3 12.5,3 C12.7761424,3 13,3.22385763 13,3.5 L13,9.03544443 L13,9.03544443 Z M12.5,15 C13.8807119,15 15,13.8807119 15,12.5 C15,11.1192881 13.8807119,10 12.5,10 C11.1192881,10 10,11.1192881 10,12.5 C10,13.8807119 11.1192881,15 12.5,15 Z" transform="rotate(90 12.5 12.51)"/>
-                                                    </svg>
-                                                    <span class="tooltiptext" data-value="{{flight.duration}}"></span><!--07 hrs 50 mins-->
+                                                    
+                                                    {% if trip_type == '1' %}
+                                                     {% for dat in flight.itineraries %}
+                                                <p>    
+                                                    {{dat.duration|slice:"2:8"}}
+                                                </p>   
+                                                 {% endfor %}
+                                                {% else %}
+                                                {% for dat in flight.itineraries %}
+                                                {% if forloop.counter == 1 %}
+                                                <p>    
+                                                    {{dat.duration|slice:"2:8"}}
+                                                </p>   
+                                                {% endif %}
+                                                 {% endfor %}
+                                                    {% endif %}
+                                                        
+                                                    
+                                           
+                                                    
                                                 </div>
                                                 <div class="flight-destination-time">
                                                     <div class="flight-time">
-                                                        <h5>{{flight.arrival_time|time:"H:i"}}</h5>
+                                                        
+                                                        {% if trip_type == '1' %}
+                                                           {% for inf in flight.itineraries %}
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == inf.segments|length %}
+                                                <h5>{{info.arrival.at|slice:"11:16"}}</h5>
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endfor %}
+                                                {% else %}
+                                                {% for inf in flight.itineraries %}
+                                                {% if forloop.counter == flight.itineraries|length %}
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == inf.segments|length %}
+                                                <h5>{{info.arrival.at|slice:"11:16"}}</h5>
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% endfor %} 
+                                                        {% endif %}
+                                                            
+                                                         
                                                     </div>
                                                     <div class="flight-place">
-                                                        {{flight.destination.city}}
+                                                        {{destination|slice:"4:"}}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="flight-details">
                                                 <div class="flight-price">
                                                     <h5>
-                                                        ₹ 
+                                                        {{currency}} 
                                                         <span>
-                                                            {% if seat == 'Economy' %}{{flight.economy_fare}}{% endif %}
-                                                            {% if seat == 'Business' %}{{flight.business_fare}}{% endif %}
-                                                            {% if seat == 'First' %}{{flight.first_fare}}{% endif %}
+                                                            {{flight.price.total}}
                                                         </span>
                                                     </h5>
                                                 </div>
@@ -405,7 +520,7 @@
                                                         {% if forloop.couter == 1 %}checked{% endif %}
                                                         <input type="radio" class="flight1-radio r-b" name="test1" value="{{flight.id}}" data-plane='{{flight.plane}}' data-depart='{{flight.depart_time|time:"H:i"}}' data-arrive='{{flight.arrival_time|time:"H:i"}}' data-fare="{% if seat == 'Economy' %} {{flight.economy_fare}} {% elif seat == 'Business' %} {{flight.business_fare}} {% else %} {{flight.first_fare}} {% endif %}" {% if forloop.counter == 1 %}checked{% endif %}>
                                                     {% else %}
-                                                        <form action="{% url 'review' %}" method="GET" style="display: flex;">
+                                                        <form action="" method="GET" style="display: flex;">
                                                             <input type="hidden" name="flight1Id" value="{{flight.id}}">
                                                             <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                                             <input type="hidden" name="seatClass" value="{{seat}}">
@@ -465,14 +580,14 @@
                                         <div class="filter-price2">
                                             <div class="font-weight-bold">Price</div>
                                             <div>
-                                                <input type="range" class="form-control-range" min="{{min_price2}}" max="{{max_price2}}" value="{{max_price2}}" oninput="filter2()">
+                                                <input type="range" class="form-control-range" min="{{min_price}}" max="{{max_price}}" value="{{max_price}}" oninput="filter2()">
                                                 <div class="price-range-output">
                                                     <div class="initial-price-range">
-                                                        <span class="currency-symbol">₹</span>
-                                                        <span class="initial-price-value">{{min_price2}}</span>
+                                                        <span class="currency-symbol">{{currency}}</span>
+                                                        <span class="initial-price-value">{{min_price}}</span>
                                                     </div>
                                                     <div class="final-price-range">
-                                                        <span class="currency-symbol">₹</span>
+                                                        <span class="currency-symbol">{{currency}}</span>
                                                         <span class="final-price-value"></span>
                                                     </div>
                                                 </div>
@@ -645,42 +760,95 @@
                                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.5em" height="1.3em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 440 384"><path d="M14 335h405v43H14v-43zm417.5-199.5q3.5 12.5-3 24T409 175l-114 30l-92 25l-114 30l-34 10l-16-29l-39-67l31-9l42 33l106-28L91 17l41-11l147 137l113-30q13-4 24.5 3t15 19.5z" fill="#434445"/><rect x="0" y="0" width="440" height="384" fill="rgba(0, 0, 0, 0)" /></svg>
                                                     </div>
                                                     <div class="company-details">
-                                                        <div class="company-name">{{flight2.airline}}</div>
-                                                        <div class="plane-name">{{flight2.plane}}</div>
+                                                        <div class="company-name">
+                                                            {% for inf in flight2.itineraries %}
+                                                
+                                                {% if forloop.counter == flight2.itineraries|length %}
+                                                    
+                                              
+                                                    
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == 1 %}
+                                                {{info.id}}
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                  {% endif %}
+                                                {% endfor %}
+                                                        </div>
+                                                        <div class="plane-name">
+                                                             {% for inf in flight2.itineraries %}
+                                                 
+                                                 {% if forloop.counter == flight2.itineraries|length %}
+                                                    
+                                            
+                                                    
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == 1 %}
+                                                {{info.carrierCode}} {{info.aircraft.code}}
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% endfor %} 
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="flight-time">
                                                     <div class="flight-origin-time">
                                                         <div class="flight-time">
-                                                            <h5>{{flight2.depart_time|time:"H:i"}}</h5>
+                                                            {% for inf in flight2.itineraries %}
+                                                {% if forloop.counter == flight2.itineraries|length %}
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == 1 %}
+                                                <h5>{{info.departure.at|slice:"11:16"}}</h5>
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% endfor %}
                                                         </div>
                                                         <div class="flight-place">
-                                                            {{flight2.origin.city}}
+                                                            {{destination}}
                                                         </div>
                                                     </div>
                                                     <div class="flight-stops2 tooltip">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" viewBox="0 0 24 24">
-                                                            <path d="M13,9.03544443 C14.6961471,9.27805926 16,10.736764 16,12.5 C16,14.263236 14.6961471,15.7219407 13,15.9645556 L13,21.5207973 C13,21.7969397 12.7761424,22.0207973 12.5,22.0207973 C12.2238576,22.0207973 12,21.7969397 12,21.5207973 L12,15.9645556 C10.3038529,15.7219407 9,14.263236 9,12.5 C9,10.736764 10.3038529,9.27805926 12,9.03544443 L12,3.5 C12,3.22385763 12.2238576,3 12.5,3 C12.7761424,3 13,3.22385763 13,3.5 L13,9.03544443 L13,9.03544443 Z M12.5,15 C13.8807119,15 15,13.8807119 15,12.5 C15,11.1192881 13.8807119,10 12.5,10 C11.1192881,10 10,11.1192881 10,12.5 C10,13.8807119 11.1192881,15 12.5,15 Z" transform="rotate(90 12.5 12.51)"/>
-                                                        </svg>
-                                                        <span class="tooltiptext" data-value="{{flight2.duration}}"></span><!--07 hrs 50 mins-->
+                                                        {% for dat in flight2.itineraries %}
+                                                {% if forloop.counter == flight2.itineraries|length %}
+                                                <p>    
+                                                    {{dat.duration|slice:"2:8"}}
+                                                </p>   
+                                                {% endif %}
+                                                 {% endfor %}
                                                     </div>
                                                     <div class="flight-destination-time2">
                                                         <div class="flight-time">
-                                                            <h5>{{flight2.arrival_time|time:"H:i"}}</h5>
+                                                            {% for inf in flight2.itineraries %}
+                                                {% if forloop.counter == flight2.itineraries|length %}
+                                                {% for info in inf.segments %}
+
+                                                {% if forloop.counter == inf.segments|length %}
+                                                <h5>{{info.arrival.at|slice:"11:16"}}</h5>
+                                                {% endif %}
+
+                                                {% endfor %}
+                                                {% endif %}
+                                                {% endfor %} 
                                                         </div>
                                                         <div class="flight-place">
-                                                            {{flight2.destination.city}}
+                                                            {{origin}}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="flight-details">
                                                     <div class="flight-price">
                                                         <h5>
-                                                            ₹ 
+                                                            {{currency}} 
                                                             <span>
-                                                                {% if seat == 'Economy' %}{{flight2.economy_fare}}{% endif %}
-                                                                {% if seat == 'Business' %}{{flight2.business_fare}}{% endif %}
-                                                                {% if seat == 'First' %}{{flight2.first_fare}}{% endif %}
+                                                                {{flight2.price.total}}
                                                             </span>
                                                         </h5>
                                                     </div>
@@ -692,7 +860,7 @@
                                                             {% if forloop.couter == 1 %}checked{% endif %}
                                                             <input type="radio" class="flight2-radio r-b" name="test2" value="{{flight2.id}}" data-plane='{{flight2.plane}}' data-depart='{{flight2.depart_time|time:"H:i"}}' data-arrive='{{flight2.arrival_time|time:"H:i"}}' data-fare="{% if seat == 'Economy' %} {{flight2.economy_fare}} {% elif seat == 'Business' %} {{flight2.business_fare}} {% else %} {{flight2.first_fare}} {% endif %}" {% if forloop.counter == 1 %}checked{% endif %}>
                                                         {% else %}
-                                                            <form action="{% url 'review' %}" method="GET" style="display: flex;">
+                                                            <form action="" method="GET" style="display: flex;">
                                                                 <input type="hidden" name="flight1Id" value="{{flight2.id}}">
                                                                 <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                                                 <input type="hidden" name="seatClass" value="{{seat}}">
@@ -734,41 +902,35 @@
                 <div class="col-3 selection1">
                     <div class="white">
                         <div>
-                            <span>{{origin.code|upper}}</span>
+                            <span>{{origin|slice:":3"|upper}}</span>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                             </svg>
-                            <span>{{destination.code|upper}}</span>&nbsp;&nbsp;@&nbsp;&nbsp;₹
+                            <span>{{destination|slice:":3"|upper}}</span>&nbsp;&nbsp;@&nbsp;&nbsp;{{currency}}
                             <span id="select-f1-fare">
-                                {% if seat == "Economy" %}
-                                    {{flights.all.0.economy_fare}}
-                                {% elif seat == "Business" %}
-                                    {{flights.all.0.business_fare}}
-                                {% else %}
-                                    {{flights.all.0.first_fare}}
-                                {% endif %}
+                                {{flight2.price.total}}
                             </span><!---->
                         </div>
                         <div class="white-2">
                             <span id="select-f1-plane">{{flights.all.0.plane}}</span><!---->
                             &nbsp;&nbsp;
-                            <span id="select-f1-depart">{{flights.all.0.depart_time | time:"H:i"}}</span><!---->
+                            <span id="select-f1-depart">{{flights.all.0.depart_time}}</span><!---->
                             •
-                            <span id="select-f1-arrive">{{flights.all.0.arrival_time | time:"H:i"}}</span><!---->
+                            <span id="select-f1-arrive">{{flights.all.0.arrival_time}}</span><!---->
                         </div>
                     </div>
                 </div>
                 <div class="col-3 selection2">
                     <div class="white">
                         <div>
-                            <span>{{destination.code|upper}}</span>
+                            <span>{{destination|slice:":3"|upper}}</span>
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                             </svg>
-                            <span>{{origin.code|upper}}</span>
-                            &nbsp;&nbsp;@&nbsp;&nbsp;₹
+                            <span>{{origin|slice:":3"|upper}}</span>
+                            &nbsp;&nbsp;@&nbsp;&nbsp;{{currency}}
                             {% if flights2 %}
-                                &nbsp;&nbsp;@&nbsp;&nbsp;₹
+                                &nbsp;&nbsp;@&nbsp;&nbsp;{{currency}}
                                 <span id="select-f2-fare">
                                     {% if seat == "Economy" %}
                                         {{flights2.all.0.economy_fare}}
@@ -799,7 +961,7 @@
                             <span>TOTAL FARE</span>
                         </div>
                         <div>
-                            <span>₹
+                            <span>{{currency}}
                                 <span id="select-total-fare">
                                     {% if flights2 %}
                                         {% if seat == "Economy" %}
@@ -826,7 +988,7 @@
                 <div class="col-3 selection-confirm">
                     <div class="white">
                         <div>
-                            <form action="{% url 'review' %}" method="GET">
+                            <form action="" method="GET">
                                 <input type="hidden" name="flight1Id" value="{{flights.all.0.id}}" id="flt1">
                                 <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                 <input type="hidden" name="flight2Id" value="{{flights2.all.0.id}}" id="flt2">
@@ -845,7 +1007,7 @@
                                 <div>AMOUNT</div>
                             </div>
                             <div class="col-7" style="font-size: 1.2em; font-weight: bold; display: flex; padding: 0;">
-                                <span style="margin: auto;">₹
+                                <span style="margin: auto;">{{currency}}
                                     <span id="select-total-fare-media">
                                         {% if flights2 %}
                                             {% if seat == "Economy" %}
@@ -870,7 +1032,7 @@
                         </div>
                         <div class="col-5" style="display: flex;">
                             <div style="margin: auto;">
-                                <form action="{% url 'review' %}" method="GET">
+                                <form action="" method="GET">
                                     <input type="hidden" name="flight1Id" value="{{flights.all.0.id}}" id="flt1">
                                     <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                     <input type="hidden" name="flight2Id" value="{{flights2.all.0.id}}" id="flt2">

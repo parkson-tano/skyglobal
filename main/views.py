@@ -138,13 +138,37 @@ def search_offers(request):
                     infants=infant_seat,
                     travelClass=travel_class,
                 )
+                price = []
+                data = []
+                p = []
+                seg = []
+                if stops == '0':
+                    for i in response.data:
+                        if i['oneWay'] != 'false':
+                            data.append(i)
+                elif stops == '1':
+                    for i in response.data:
+                        p.append(i['itineraries'])
+                        for y in p:
+                            seg.append(y[0])
+                        if len(y[0]['segments']) <=1:
+                            data.append(i)
+                elif stops == '2':
+                    for i in response.data:
+                        p.append(i['itineraries'])
+                        for y in p:
+                            seg.append(y[0])
+                        if len(y[0]['segments']) <=2:
+                            data.append(i)
+                else:
+                    data = response.data
                 for i in response.data:
                     price.append(float(i['price']['grandTotal']))
                 
                 max_price = max(price)
                 min_price = min(price)
                 context = {
-                    "data": response.data,
+                    "data": data,
                     'origin': origin_code,
                     'destination': destination_code,
                     'depart_date':datetime.datetime.strptime(departure_date, '%Y-%m-%d'), 

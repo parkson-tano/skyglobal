@@ -26,14 +26,14 @@
 
 				<div class="form-check-inline">
 					<label class="form-check-label">
-						<input type="radio" class="form-check-input trip-type" id="round-trip" name="TripType" value="1"
+						<input type="radio" class="form-check-input trip-type" id="round-trip" name="TripType" value="2"
 							checked>Round Trip
 					</label>
 				</div>
 				<div class="form-check-inline">
 					<label class="form-check-label">
 						<input type="radio" class="form-check-input trip-type" id="one-way" name="TripType"
-							value="2">One-way
+							value="1">One-way
 					</label>
 				</div>
 				<div class="form-check-inline">
@@ -108,10 +108,9 @@
 				<div class="form-group">
 
 					<datalist id="suggestions">
-						<option>USD</option>
-						<option>EUR</option>
-						<option>GPB</option>
-						<option>XAF</option>
+						<option value="$">USD</option>
+						<option value="€">EUR</option>
+						<option value="£">GPB</option>
 					</datalist>
 
 					<input class="form-control" autoComplete="on" list="suggestions" type="text" id=""
@@ -294,85 +293,6 @@
 </form>
 			</div>
 			
-		</div>
-	</div>
-</section>
-<section class="section second-section">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-6">
-				<div class="section_title text-center mb_70">
-					<h2>Popular Destination</h2>
-				</div>
-			</div>
-		</div>
-		<div class="row popular_destinations">
-			<div class="col-lg-4 col-md-6">
-				<div class="single_destination"
-					onclick="window.location.href = 'https://en.wikipedia.org/wiki/Tourism_in_Italy'">
-					<div class="thumb">
-						<img src="{% static 'img/destination/1.png' %}" alt="">
-					</div>
-					<div class="content">
-						<a href="#">Italy</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6">
-				<div class="single_destination"
-					onclick="window.location.href = 'https://en.wikipedia.org/wiki/Tourism_in_Brazil'">
-					<div class="thumb">
-						<img src="{% static 'img/destination/2.png' %}" alt="">
-					</div>
-					<div class="content">
-						<a href="#">Brazil</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6">
-				<div class="single_destination"
-					onclick="window.location.href = 'https://en.wikipedia.org/wiki/Tourism_in_the_United_States'">
-					<div class="thumb">
-						<img src="{% static 'img/destination/3.png' %}" alt="">
-					</div>
-					<div class="content">
-						<a href="#">America</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6">
-				<div class="single_destination"
-					onclick="window.location.href = 'https://en.wikipedia.org/wiki/Tourism_in_Nepal'">
-					<div class="thumb">
-						<img src="{% static 'img/destination/4.png' %}" alt="">
-					</div>
-					<div class="content">
-						<a href="#">Nepal</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6">
-				<div class="single_destination"
-					onclick="window.location.href = 'https://en.wikipedia.org/wiki/Tourism_in_the_Maldives'">
-					<div class="thumb">
-						<img src="{% static 'img/destination/5.png' %}" alt="">
-					</div>
-					<div class="content">
-						<a href="#">Maldives</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6">
-				<div class="single_destination"
-					onclick="window.location.href = 'https://en.wikipedia.org/wiki/Tourism_in_Indonesia'">
-					<div class="thumb">
-						<img src="{% static 'img/destination/6.png' %}" alt="">
-					</div>
-					<div class="content">
-						<a href="#">Indonesia</a>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>
