@@ -988,7 +988,7 @@
                 <div class="col-3 selection-confirm">
                     <div class="white">
                         <div>
-                            <form action="" method="GET">
+                            <form action="{% url 'globalsky:review' %" method="GET">
                                 <input type="hidden" name="flight1Id" value="{{flights.all.0.id}}" id="flt1">
                                 <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                 <input type="hidden" name="flight2Id" value="{{flights2.all.0.id}}" id="flt2">
