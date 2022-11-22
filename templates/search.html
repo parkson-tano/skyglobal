@@ -860,7 +860,7 @@
                                                             {% if forloop.couter == 1 %}checked{% endif %}
                                                             <input type="radio" class="flight2-radio r-b" name="test2" value="{{flight2.id}}" data-plane='{{flight2.plane}}' data-depart='{{flight2.depart_time|time:"H:i"}}' data-arrive='{{flight2.arrival_time|time:"H:i"}}' data-fare="{% if seat == 'Economy' %} {{flight2.economy_fare}} {% elif seat == 'Business' %} {{flight2.business_fare}} {% else %} {{flight2.first_fare}} {% endif %}" {% if forloop.counter == 1 %}checked{% endif %}>
                                                         {% else %}
-                                                            <form action="" method="GET" style="display: flex;">
+                                                            <form action="{% url 'globalsky:review' %}" method="GET" style="display: flex;">
                                                                 <input type="hidden" name="flight1Id" value="{{flight2.id}}">
                                                                 <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                                                 <input type="hidden" name="seatClass" value="{{seat}}">
