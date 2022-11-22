@@ -10,7 +10,7 @@
 
 {% block body %}
     <section class="section section1">
-        <form action="{% url 'book' %}" onsubmit="return book_submit()" method="POST">
+        <form action="{% url 'globalsky:book' %}" onsubmit="return book_submit()" method="POST">
             {% csrf_token %}
             <input type="hidden" name="flight1" value="{{flight1.id}}">
             <input type="hidden" name="flight1Date" value='{{flight1ddate | date:"d-m-Y"}}'>

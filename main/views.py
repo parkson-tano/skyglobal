@@ -16,6 +16,7 @@ amadeus = Client(
     client_secret='01neJa0qM0djzTma'
 )
 
+flight = []
 
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
@@ -101,6 +102,7 @@ def search_offers(request):
                             seg.append(y[0])
                         if len(y[0]['segments']) <=1:
                             data.append(i)
+
                 elif stops == '2':
                     for i in response.data:
                         p.append(i['itineraries'])
@@ -108,6 +110,7 @@ def search_offers(request):
                             seg.append(y[0])
                         if len(y[0]['segments']) <=2:
                             data.append(i)
+  
                 else:
                     data = response.data
                 for i in data:
@@ -115,7 +118,7 @@ def search_offers(request):
                 
                 max_price = max(price)
                 min_price = min(price)
-
+                flight = data
                 context = {
                     "data": data,
                     'origin': origin_code,
@@ -167,6 +170,7 @@ def search_offers(request):
                 
                 max_price = max(price)
                 min_price = min(price)
+                flight = data
                 context = {
                     "data": data,
                     'origin': origin_code,
@@ -187,6 +191,10 @@ def search_offers(request):
     else:
         return JsonResponse({"error": "Invalid request method"})
 
+print(flight)
+
+class Booking(TemplateView):
+    template_name = 'flight/book.html'
 
 @csrf_exempt
 def price_offer(req):
@@ -214,3 +222,20 @@ def book_flight(req):
             print(error)
     else:
         return JsonResponse({"error": "Invalid request method"})
+
+
+def review(request):
+    flightID = request.GET['flight1Id']
+    flightDate = request.GET['flight1Date']
+    flightSeat = request.GET['seatClass']
+    fli = []
+    for i in flight:
+        if i['id'] == flightID:
+            fli.append(i)
+
+    context = {
+            'flight1':fli,
+            }
+    print(flight)
+    return render(request, 'flight/book.html', context=context, )     
+

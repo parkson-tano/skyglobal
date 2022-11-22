@@ -14,4 +14,6 @@ urlpatterns = [
     path('search_offers/', search_offers, name="search_offers"),
     path('price_offers/', price_offer, name="price_offer"),
     path('book_flight/', book_flight, name="book_flight"),
+    path('review', review, name='review'),
+    path('book', Booking.as_view(), name='book'),
 ]
