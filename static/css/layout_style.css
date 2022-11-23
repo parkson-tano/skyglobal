@@ -102,7 +102,7 @@ body{
         padding: 35px 18px !important;
     }
 }
-@media (max-width: 376px){
+@media (max-width: 476px){
     .section{
         padding: 30px 1px;
     }
