@@ -223,7 +223,7 @@ h5{
 
 
 
-@media (max-width: 376px) {
+@media (max-width: 476px) {
     .container-fluid{
         background-color: rgba(10, 0, 0, .05);
     }
