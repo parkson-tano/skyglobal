@@ -212,5 +212,45 @@
            
         });
     </script>
+    <script>
+function BookFlight(flight) {
+  const first = document.getElementById("first").value;
+  const last = document.getElementById("last").value;
+  fetch("/price_offers", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      flight,
+    }),
+  })
+    .then((response) => response.json())
+    .then((dataObject) => {
+      fetch("<http://localhost:8001/book_flight/>", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          flight,
+          traveler: { first, last },
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          flights = [];
+          alert("Your flight has been booked successfully")
+        })
+        .catch((error) => {
+          alert("An Error occurred!");
+        });
+    })
+    .catch((error) => {
+      alert("An Error occurred!");
+    });
+}
+      </script>
+
 </body>
 </html>

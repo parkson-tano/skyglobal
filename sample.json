@@ -1,0 +1,162 @@
+{
+    "type": "flight-offer",
+    "id": "4",
+    "source": "GDS",
+    "instantTicketingRequired": False,
+    "nonHomogeneous": False,
+    "oneWay": False,
+    "lastTicketingDate": "2022-11-25",
+    "numberOfBookableSeats": 7,
+    "itineraries": [
+        {
+            "duration": "PT36H15M",
+            "segments": [
+                {
+                    "departure": {
+                        "iataCode": "LGA",
+                        "terminal": "C",
+                        "at": "2022-12-09T19:00:00"
+                    },
+                    "arrival": {
+                        "iataCode": "YYZ",
+                        "terminal": "3",
+                        "at": "2022-12-09T20:40:00"
+                    },
+                    "carrierCode": "WS",
+                    "number": "1215",
+                    "aircraft": {
+                        "code": "7M8"
+                    },
+                    "operating": {
+                        "carrierCode": "WS"
+                    },
+                    "duration": "PT1H40M",
+                    "id": "101",
+                    "numberOfStops": 0,
+                    "blacklistedInEU": False
+                },
+                {
+                    "departure": {
+                        "iataCode": "YYZ",
+                        "terminal": "3",
+                        "at": "2022-12-10T16:00:00"
+                    },
+                    "arrival": {
+                        "iataCode": "YYC",
+                        "at": "2022-12-10T18:12:00"
+                    },
+                    "carrierCode": "WS",
+                    "number": "667",
+                    "aircraft": {
+                        "code": "789"
+                    },
+                    "operating": {
+                        "carrierCode": "WS"
+                    },
+                    "duration": "PT4H12M",
+                    "id": "102",
+                    "numberOfStops": 0,
+                    "blacklistedInEU": False
+                },
+                {
+                    "departure": {
+                        "iataCode": "YYC",
+                        "at": "2022-12-10T20:45:00"
+                    },
+                    "arrival": {
+                        "iataCode": "LHR",
+                        "terminal": "3",
+                        "at": "2022-12-11T12:15:00"
+                    },
+                    "carrierCode": "WS",
+                    "number": "18",
+                    "aircraft": {
+                        "code": "789"
+                    },
+                    "operating": {
+                        "carrierCode": "WS"
+                    },
+                    "duration": "PT8H30M",
+                    "id": "103",
+                    "numberOfStops": 0,
+                    "blacklistedInEU": False
+                }
+            ]
+        }
+    ],
+    "price": {
+        "currency": "EUR",
+        "total": "315.13",
+        "base": "146.00",
+        "fees": [
+            {
+                "amount": "0.00",
+                "type": "SUPPLIER"
+            },
+            {
+                "amount": "0.00",
+                "type": "TICKETING"
+            }
+        ],
+        "grandTotal": "315.13",
+        "additionalServices": [
+            {
+                "amount": "28.96",
+                "type": "CHECKED_BAGS"
+            }
+        ]
+    },
+    "pricingOptions": {
+        "fareType": [
+            "PUBLISHED"
+        ],
+        "includedCheckedBagsOnly": False
+    },
+    "validatingAirlineCodes": [
+        "WS"
+    ],
+    "travelerPricings": [
+        {
+            "travelerId": "1",
+            "fareOption": "STANDARD",
+            "travelerType": "ADULT",
+            "price": {
+                "currency": "EUR",
+                "total": "315.13",
+                "base": "146.00"
+            },
+            "fareDetailsBySegment": [
+                {
+                    "segmentId": "101",
+                    "cabin": "ECONOMY",
+                    "fareBasis": "LTQD0ZEK",
+                    "brandedFare": "ECONO",
+                    "class": "L",
+                    "includedCheckedBags": {
+                        "quantity": 0
+                    }
+                },
+                {
+                    "segmentId": "102",
+                    "cabin": "ECONOMY",
+                    "fareBasis": "LTQD0ZEK",
+                    "brandedFare": "ECONO",
+                    "class": "L",
+                    "includedCheckedBags": {
+                        "quantity": 0
+                    }
+                },
+                {
+                    "segmentId": "103",
+                    "cabin": "ECONOMY",
+                    "fareBasis": "LP0D0TEI",
+                    "brandedFare": "ECONO",
+                    "class": "L",
+                    "includedCheckedBags": {
+                        "quantity": 0
+                    }
+                }
+            ]
+        }
+    ]
+}

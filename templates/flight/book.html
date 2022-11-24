@@ -23,21 +23,21 @@
             <div class="row main-row">
                 <div class="col-8">
                 <div class="ticket-details">
-                    <h5>Ticket Details</h5>
+                    <h5>Ticket Details {{flight}}</h5>
                     <hr>
                     <div class="media-airline">
                         <div>
-                            <div class="brand">{{flight1.airline}}</div>
+                            <div class="brand">{{flight1.id}}</div>
                             <div>&nbsp;&middot;&nbsp;</div>
-                            <div class="plane-name">{{flight1.plane}}</div>
+                            <div class="plane-name">{{flight1.id}}</div>
                             <div>&nbsp;&middot;&nbsp;</div>
                             <div class="plane-name">{{seat}}</div>
                         </div>
                     </div>
                     <div class="row ticket-details-div">
                         <div class="col-3 airline-name">
-                            <div class="brand">{{flight1.airline}}</div>
-                            <div class="plane-name">{{flight1.plane}}</div>
+                            <div class="brand">{{flight1.id}}</div>
+                            <div class="plane-name">{{flight1.type}}</div>
                         </div>
                         <div class="col-3 depart-time">
                             <div class="time">{{flight1.depart_time | time:'H:i'}}</div>

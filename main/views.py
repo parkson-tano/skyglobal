@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.views.generic import (CreateView, DetailView, FormView, ListView,
                                   TemplateView, View)
 import datetime
+import ast
 amadeus = Client(
     client_id='G10V3YXxeLaBSrVDLfVj0qAGIxS1BRHA',
     client_secret='01neJa0qM0djzTma'
@@ -118,7 +119,7 @@ def search_offers(request):
                 
                 max_price = max(price)
                 min_price = min(price)
-                flight = data
+     
                 context = {
                     "data": data,
                     'origin': origin_code,
@@ -145,6 +146,7 @@ def search_offers(request):
                 data = []
                 p = []
                 seg = []
+        
                 if stops == '0':
                     for i in response.data:
                         if i['oneWay'] != 'false':
@@ -170,7 +172,7 @@ def search_offers(request):
                 
                 max_price = max(price)
                 min_price = min(price)
-                flight = data
+   
                 context = {
                     "data": data,
                     'origin': origin_code,
@@ -190,8 +192,6 @@ def search_offers(request):
             print(error)
     else:
         return JsonResponse({"error": "Invalid request method"})
-
-print(flight)
 
 class Booking(TemplateView):
     template_name = 'flight/book.html'
@@ -216,6 +216,8 @@ def book_flight(req):
         try:
             flight = req.POST['flight']
             traveler = req.POST['traveler']
+            flight = flight.replace('\"','')
+            print(flight)
             booking = amadeus.booking.flight_orders.post(flight, traveler)
             return JsonResponse(booking)
         except ResponseError as error:
@@ -225,17 +227,22 @@ def book_flight(req):
 
 
 def review(request):
-    flightID = request.GET['flight1Id']
-    flightDate = request.GET['flight1Date']
-    flightSeat = request.GET['seatClass']
-    fli = []
-    for i in flight:
-        if i['id'] == flightID:
-            fli.append(i)
+    flightID = request.POST['flight1Id']
+    flightDate = request.POST['flight1Date']
+    flightSeat = request.POST['seatClass']
+    flight = request.POST['flight']
+    fly = flight.replace('\"', '')
+
+    a = {
+        'type': 'flight-offer', 'id': '2', 'source': 'GDS', 'instantTicketingRequired': False, 'nonHomogeneous': False, 'oneWay': False, 'lastTicketingDate': '2022-11-25', 'numberOfBookableSeats': 7, 'itineraries': [{'duration': 'PT36H15M', 'segments': [{'departure': {'iataCode': 'LGA', 'terminal': 'C', 'at': '2022-12-09T19:00:00'}, 'arrival': {'iataCode': 'YYZ', 'terminal': '3', 'at': '2022-12-09T20:40:00'}, 'carrierCode': 'WS', 'number': '1215', 'aircraft': {'code': '7M8'}, 'operating': {'carrierCode': 'WS'}, 'duration': 'PT1H40M', 'id': '93', 'numberOfStops': 0, 'blacklistedInEU': False}, {'departure': {'iataCode': 'YYZ', 'terminal': '3', 'at': '2022-12-10T06:30:00'}, 'arrival': {'iataCode': 'YYC', 'at': '2022-12-10T09:00:00'}, 'carrierCode': 'WS', 'number': '653', 'aircraft': {'code': '73H'}, 'operating': {'carrierCode': 'WS'}, 'duration': 'PT4H30M', 'id': '94', 'numberOfStops': 0, 'blacklistedInEU': False}, {'departure': {'iataCode': 'YYC', 'at': '2022-12-10T20:45:00'}, 'arrival': {'iataCode': 'LHR', 'terminal': '3', 'at': '2022-12-11T12:15:00'}, 'carrierCode': 'WS', 'number': '18', 'aircraft': {'code': '789'}, 'operating': {'carrierCode': 'WS'}, 'duration': 'PT8H30M', 'id': '95', 'numberOfStops': 0, 'blacklistedInEU': False}]}], 'price': {'currency': 'EUR', 'total': '315.13', 'base': '146.00', 'fees': [{'amount': '0.00', 'type': 'SUPPLIER'}, {'amount': '0.00', 'type': 'TICKETING'}], 'grandTotal': '315.13', 'additionalServices': [{'amount': '28.96', 'type': 'CHECKED_BAGS'}]}, 'pricingOptions': {'fareType': ['PUBLISHED'], 'includedCheckedBagsOnly': False}, 'validatingAirlineCodes': ['WS'], 'travelerPricings': [{'travelerId': '1', 'fareOption': 'STANDARD', 'travelerType': 'ADULT', 'price': {'currency': 'EUR', 'total': '315.13', 'base': '146.00'}, 'fareDetailsBySegment': [{'segmentId': '93', 'cabin': 'ECONOMY', 'fareBasis': 'LTQD0ZEK', 'brandedFare': 'ECONO', 'class': 'L', 'includedCheckedBags': {'quantity': 0}}, {'segmentId': '94', 'cabin': 'ECONOMY', 'fareBasis': 'LTQD0ZEK', 'brandedFare': 'ECONO', 'class': 'L', 'includedCheckedBags': {'quantity': 0}}, {'segmentId': '95', 'cabin': 'ECONOMY', 'fareBasis': 'LP0D0TEI', 'brandedFare': 'ECONO', 'class': 'L', 'includedCheckedBags': {'quantity': 0}}]}]
+    }
+    
+
+
 
     context = {
-            'flight1':fli,
+            'flight1':a,
             }
-    print(flight)
+    # return JsonResponse(context)
     return render(request, 'flight/book.html', context=context, )     
 
