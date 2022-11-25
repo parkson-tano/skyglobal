@@ -114,11 +114,15 @@ def search_offers(request):
   
                 else:
                     data = response.data
+        
                 for i in data:
                     price.append(float(i['price']['grandTotal']))
-                
-                max_price = max(price)
-                min_price = min(price)
+                if len(price) > 0:
+                    max_price = max(price)
+                    min_price = min(price)
+                else:
+                    max_price = None
+                    min_price = None
      
                 context = {
                     "data": data,
@@ -170,8 +174,12 @@ def search_offers(request):
                 for i in response.data:
                     price.append(float(i['price']['grandTotal']))
                 
-                max_price = max(price)
-                min_price = min(price)
+                if len(price) > 0:
+                    max_price = max(price)
+                    min_price = min(price)
+                else:
+                    max_price = None
+                    min_price = None
    
                 context = {
                     "data": data,
