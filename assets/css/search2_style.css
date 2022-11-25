@@ -183,7 +183,7 @@
     color: rgb(97, 97, 97);
 }
 .flight-company{
-    width: 25%;
+    width: auto;
 }
 .flight-time{
     display: flex;
@@ -195,7 +195,7 @@
     justify-content: space-between;
 }
 .flight-origin-time, .flight-destination-time, .flight-origin-time2, .flight-destination-time2{
-    width: 40%;
+    width: auto;
 }
 .flight-stops, .flight-stops2{
     width: 20%;
@@ -305,7 +305,7 @@
     text-align: center;
 }
 .sort-price{
-    margin-right: 20px;
+    margin-right: auto;
 }
 
 .price-range-output{
@@ -378,9 +378,6 @@
     .sort-div{
         display: none!important;
     }
-    .each-flight-div{
-        padding: 12px 10px;
-    }
     .each-flight-div div{
         overflow-wrap: break-word;
     }
@@ -388,16 +385,16 @@
         display: none;
     }
     .flight-time-div{
-        max-width: 44%;
+        max-width: auto;
     }
     .flight-time h5{
         font-size: 1em;
     }
     .flight-stops{
-        width: 17%;
+        width: auto;
     }
     .flight-company{
-        width: 23%;
+        width: auto;
     }
     .flight-details h5{
         font-size: 1em;
@@ -414,7 +411,7 @@
     .flight-details{
         display: flex;
         justify-content: center;
-        width: 23%;
+        width: auto;
     }
     .white{
         font-size: medium;
