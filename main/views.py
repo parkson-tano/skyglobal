@@ -16,7 +16,6 @@ amadeus = Client(
     client_id='G10V3YXxeLaBSrVDLfVj0qAGIxS1BRHA',
     client_secret='01neJa0qM0djzTma'
 )
-
 flight = []
 
 def is_ajax(request):
@@ -222,10 +221,10 @@ def price_offer(req):
 def book_flight(req):
     if req.method == "POST":
         try:
+            first_name = req.POST['passenger1FName']
+            last_name = req.POST['passenger1LName']
+            traveler = {'first':first_name, 'last':last_name}
             flight = req.POST['flight']
-            traveler = req.POST['traveler']
-            flight = flight.replace('\"','')
-            print(flight)
             booking = amadeus.booking.flight_orders.post(flight, traveler)
             return JsonResponse(booking)
         except ResponseError as error:
@@ -238,19 +237,69 @@ def review(request):
     flightID = request.POST['flight1Id']
     flightDate = request.POST['flight1Date']
     flightSeat = request.POST['seatClass']
-    flight = request.POST['flight']
-    fly = flight.replace('\"', '')
+    destination = request.POST['destination']
+    origin = request.POST['origin']
+    flight = ast.literal_eval(request.POST['flight'])
 
-    a = {
-        'type': 'flight-offer', 'id': '2', 'source': 'GDS', 'instantTicketingRequired': False, 'nonHomogeneous': False, 'oneWay': False, 'lastTicketingDate': '2022-11-25', 'numberOfBookableSeats': 7, 'itineraries': [{'duration': 'PT36H15M', 'segments': [{'departure': {'iataCode': 'LGA', 'terminal': 'C', 'at': '2022-12-09T19:00:00'}, 'arrival': {'iataCode': 'YYZ', 'terminal': '3', 'at': '2022-12-09T20:40:00'}, 'carrierCode': 'WS', 'number': '1215', 'aircraft': {'code': '7M8'}, 'operating': {'carrierCode': 'WS'}, 'duration': 'PT1H40M', 'id': '93', 'numberOfStops': 0, 'blacklistedInEU': False}, {'departure': {'iataCode': 'YYZ', 'terminal': '3', 'at': '2022-12-10T06:30:00'}, 'arrival': {'iataCode': 'YYC', 'at': '2022-12-10T09:00:00'}, 'carrierCode': 'WS', 'number': '653', 'aircraft': {'code': '73H'}, 'operating': {'carrierCode': 'WS'}, 'duration': 'PT4H30M', 'id': '94', 'numberOfStops': 0, 'blacklistedInEU': False}, {'departure': {'iataCode': 'YYC', 'at': '2022-12-10T20:45:00'}, 'arrival': {'iataCode': 'LHR', 'terminal': '3', 'at': '2022-12-11T12:15:00'}, 'carrierCode': 'WS', 'number': '18', 'aircraft': {'code': '789'}, 'operating': {'carrierCode': 'WS'}, 'duration': 'PT8H30M', 'id': '95', 'numberOfStops': 0, 'blacklistedInEU': False}]}], 'price': {'currency': 'EUR', 'total': '315.13', 'base': '146.00', 'fees': [{'amount': '0.00', 'type': 'SUPPLIER'}, {'amount': '0.00', 'type': 'TICKETING'}], 'grandTotal': '315.13', 'additionalServices': [{'amount': '28.96', 'type': 'CHECKED_BAGS'}]}, 'pricingOptions': {'fareType': ['PUBLISHED'], 'includedCheckedBagsOnly': False}, 'validatingAirlineCodes': ['WS'], 'travelerPricings': [{'travelerId': '1', 'fareOption': 'STANDARD', 'travelerType': 'ADULT', 'price': {'currency': 'EUR', 'total': '315.13', 'base': '146.00'}, 'fareDetailsBySegment': [{'segmentId': '93', 'cabin': 'ECONOMY', 'fareBasis': 'LTQD0ZEK', 'brandedFare': 'ECONO', 'class': 'L', 'includedCheckedBags': {'quantity': 0}}, {'segmentId': '94', 'cabin': 'ECONOMY', 'fareBasis': 'LTQD0ZEK', 'brandedFare': 'ECONO', 'class': 'L', 'includedCheckedBags': {'quantity': 0}}, {'segmentId': '95', 'cabin': 'ECONOMY', 'fareBasis': 'LP0D0TEI', 'brandedFare': 'ECONO', 'class': 'L', 'includedCheckedBags': {'quantity': 0}}]}]
-    }
-    
+    duration = ''
+    depart_time = ''
+    depart_date = ''
+    arrive_time = ''
+    arrive_date = ''
+    depart_code = ''
+    arrive_code = ''
+    carrier_code = ''
+    aircraft_code = ''
+    base_price = ''
+    total_price = ''
+    total_price = flight['price']['total']
+    base_price = flight['price']['base']
+    fee = float(total_price) - float(base_price)
+    fee = round(fee, 2)
+    for data in flight["itineraries"]:
+        duration = data['duration'][2:]
+        if len(data["segments"]) == 1:
+            depart_time = data["segments"][0]['departure']['at'][11:16]
+            depart_date = data["segments"][0]['departure']['at'][:10]
+            arrive_time = data["segments"][0]['arrival']['at'][11:16]
+            arrive_date = data["segments"][0]['arrival']['at'][:10]
+            depart_code = data["segments"][0]['departure']['iataCode']
+            arrive_code = data["segments"][0]['arrival']['iataCode']
+            carrier_code = data["segments"][0]["carrierCode"]
+            aircraft_code = data["segments"][0]["aircraft"]['code']
 
-
+        else:
+            depart_time = data["segments"][0]['departure']['at'][11:16]
+            depart_date = data["segments"][0]['departure']['at'][:10]
+            depart_code = data["segments"][0]['departure']['iataCode']
+            carrier_code = data["segments"][0]["carrierCode"]
+            aircraft_code = data["segments"][0]["aircraft"]['code']
+            arrive_time = data["segments"][len(
+                data["segments"])-1]['arrival']['at'][11:16]
+            arrive_date = data["segments"][len(
+                data["segments"])-1]['arrival']['at'][:10]
+            arrive_code = data["segments"][len(
+                data["segments"])-1]['arrival']['iataCode']
 
     context = {
-            'flight1':a,
+            'flight1':flight,
+        "duration": duration,
+        "depart_time": depart_time,
+        "depart_date": datetime.datetime.strptime(depart_date, '%Y-%m-%d'),
+        "arrive_time": arrive_time,
+        "arrive_date": datetime.datetime.strptime(arrive_date, '%Y-%m-%d'),
+        "depart_code":depart_code,
+        "arrive_code":arrive_code,
+        "carrier_code":carrier_code,
+        "aircraft_code":aircraft_code,
+        'destination':destination,
+        'origin':origin,
+        'total_price':  total_price,
+        'base_price': base_price,
+        'fee': fee,
+        'seat': flightSeat.capitalize(),
             }
     # return JsonResponse(context)
+    print(context)
     return render(request, 'flight/book.html', context=context, )     
 

@@ -10,11 +10,12 @@
 
 {% block body %}
     <section class="section section1">
-        <form action="{% url 'globalsky:book' %}" onsubmit="return book_submit()" method="POST">
+        <form action="{% url 'globalsky:book_flight' %}" onsubmit="return book_submit()" method="POST">
             {% csrf_token %}
             <input type="hidden" name="flight1" value="{{flight1.id}}">
             <input type="hidden" name="flight1Date" value='{{flight1ddate | date:"d-m-Y"}}'>
             <input type="hidden" name="flight1Class" value="{{seat}}">
+            <input type="hidden" name="flight" value="{{flight1}}">
             {% if flight2 %}
                 <input type="hidden" name="flight2" value="{{flight2.id}}">
                 <input type="hidden" name="flight2Class" value="{{seat}}">
@@ -27,32 +28,33 @@
                     <hr>
                     <div class="media-airline">
                         <div>
-                            <div class="brand">{{flight1.id}}</div>
+                            <div class="brand">{{aircraft_code}}</div>
                             <div>&nbsp;&middot;&nbsp;</div>
-                            <div class="plane-name">{{flight1.id}}</div>
+                            <div class="plane-name">{{carrier_code}}</div>
                             <div>&nbsp;&middot;&nbsp;</div>
                             <div class="plane-name">{{seat}}</div>
                         </div>
                     </div>
                     <div class="row ticket-details-div">
                         <div class="col-3 airline-name">
-                            <div class="brand">{{flight1.id}}</div>
-                            <div class="plane-name">{{flight1.type}}</div>
+                            <div class="brand">{{aircraft_code}}</div>
+                            <div class="plane-name">{{carrier_code}}</div>
+                            {% comment %} {{info.carrierCode}} {{info.aircraft.code}} {% endcomment %}
                         </div>
                         <div class="col-3 depart-time">
-                            <div class="time">{{flight1.depart_time | time:'H:i'}}</div>
-                            <div class="date ddate" data-value='{{flight1ddate | date:"d-m-Y"}}'>{{flight1ddate | date:"D, d M y"}}</div>
-                            <div class="place">{{flight1.origin.city}}</div>
-                            <div class="airport">{{flight1.origin.airport}}</div>
+                            <div class="time">{{depart_time}}</div>
+                            <div class="date ddate" data-value='{{depart_date | date:"d-m-Y"}}'>{{depart_date | date:"D, d M y"}}</div>
+                            <div class="place">{{depart_code}}</div>
+                            <div class="airport">{{origin|slice:"5:"}}</div>
                         </div>
                         <div class="col-3 time-details">
-                            <div class="duration" data-value="{{flight1.duration}}"></div>
+                            <div class="duration">{{duration}}</div>
                         </div>
                         <div class="col-3 arrival-time">
-                            <div class="time">{{flight1.arrival_time | time:'H:i'}}</div>
-                            <div class="date adate" data-value='{{flight1adate | date:"d-m-Y"}}'>{{flight1adate | date:"D, d M y"}}</div>
-                            <div class="place">{{flight1.destination.city}}</div>
-                            <div class="airport">{{flight1.destination.airport}}</div>
+                            <div class="time">{{arrive_time}}</div>
+                            <div class="date adate" data-value='{{arrive_date | date:"d-m-Y"}}'>{{arrive_date | date:"D, d M y"}}</div>
+                            <div class="place">{{arrive_code}}</div>
+                            <div class="airport">{{destination|slice:"5:"}}</div>
                         </div>
                     </div>
                     {% if flight2 %}
@@ -116,7 +118,7 @@
                             <div class="col-3 ci">
                                 Country Code
                                 <select name="countryCode" class="custom-select">
-                                    <option data-countryCode="IN" value="91">India (+91)</option>
+                                    
                                     <option data-countryCode="DZ" value="213">Algeria (+213)</option>
                                     <option data-countryCode="AD" value="376">Andorra (+376)</option>
                                     <option data-countryCode="AO" value="244">Angola (+244)</option>
@@ -202,7 +204,7 @@
                                     <option data-countryCode="HK" value="852">Hong Kong (+852)</option>
                                     <option data-countryCode="HU" value="36">Hungary (+36)</option>
                                     <option data-countryCode="IS" value="354">Iceland (+354)</option>
-                                    <!-- <option data-countryCode="IN" value="91">India (+91)</option> -->
+                                    <option data-countryCode="IN" value="91">India (+91)</option>
                                     <option data-countryCode="ID" value="62">Indonesia (+62)</option>
                                     <option data-countryCode="IR" value="98">Iran (+98)</option>
                                     <option data-countryCode="IQ" value="964">Iraq (+964)</option>
@@ -367,10 +369,10 @@
                         <div class="note-name"><span>IMPORTANT :</span> Enter your name as it is mentioned on your passport or any government approved ID.</div>
                         <div class="row form-group add-traveller-div-name">
                             <div class="col">
-                                <input type="text" class="form-control" id="fname" placeholder="First name">
+                                <input type="text" name='first_name' class="form-control" id="fname" placeholder="First name">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" id="lname" placeholder="Last name">
+                                <input type="text" name='last_name' class="form-control" id="lname" placeholder="Last name">
                             </div>
                         </div>
                         
@@ -408,29 +410,29 @@
                             <div class="base-fae-label">Base Fare: </div>
                             <div class="base-fare-value">
                                 {% if seat == 'First' %}
-                                    ₹ <span>
+                                    $ <span>
                                         {% if flight2 %}
                                             {{flight1.first_fare | add:flight2.first_fare}}
                                         {% else %}
-                                            {{flight1.first_fare}}
+                                            {{base_price}}
                                         {% endif %}
                                         </span>
                                     <input type="hidden" id="basefare" value="{% if flight2 %}{{flight1.first_fare | add:flight2.first_fare}}{% else %}{{flight1.first_fare}}{% endif %}">
                                 {% elif seat == 'Business' %}
-                                    ₹ <span>
+                                    $ <span>
                                         {% if flight2 %}
                                             {{flight1.business_fare | add:flight2.business_fare}}
                                         {% else %}
-                                            {{flight1.business_fare}}
+                                            {{base_price}}
                                         {% endif %}
                                         </span>
                                     <input type="hidden" id="basefare" value="{% if flight2 %}{{flight1.business_fare | add:flight2.business_fare}}{% else %}{{flight1.business_fare}}{% endif %}">
                                 {% elif seat == 'Economy' %}
-                                    ₹ <span>
+                                    $ <span>
                                         {% if flight2 %}
                                             {{flight1.economy_fare | add:flight2.economy_fare}}
                                         {% else %}
-                                            {{flight1.economy_fare}}
+                                            {{base_price}}
                                         {% endif %}
                                     </span>
                                     <input type="hidden" id="basefare" value="{% if flight2 %}{{flight1.economy_fare | add:flight2.economy_fare}}{% else %}{{flight1.economy_fare}}{% endif %}">
@@ -439,7 +441,7 @@
                         </div>
                         <div class="row surcharges">
                             <div class="surcharges-label">Fee & Surcharges: </div>
-                            <div class="surcharges-value">₹ <span>{{fee}}</span></div>
+                            <div class="surcharges-value">$ <span>{{fee}}</span></div>
                             <input type="hidden" id="fee" value="{{fee}}">
                         </div>
                         <hr>
@@ -447,27 +449,27 @@
                             <div class="total-fare-label">Total Fare: </div>
                             <div class="total-fare-value">
                                 {% if seat == 'First' %}
-                                    ₹ <span>
+                                    $ <span>
                                         {% if flight2 %}
                                             {{flight1.first_fare | add:flight2.first_fare | add:fee}}
                                         {% else %}
-                                            {{flight1.first_fare | add:fee}}
+                                            {{total_price}}
                                         {% endif %}
                                     </span>
                                 {% elif seat == 'Business' %}
-                                    ₹ <span>
+                                    $ <span>
                                         {% if flight2 %}
                                             {{flight1.business_fare | add:flight2.business_fare | add:fee}}
                                         {% else %}
-                                            {{flight1.business_fare | add:fee}}
+                                            {{total_price}}
                                         {% endif %}
                                     </span>
                                 {% elif seat == 'Economy' %}
-                                    ₹ <span>
+                                    $ <span>
                                         {% if flight2 %}
                                             {{flight1.economy_fare | add:flight2.economy_fare | add:fee}}
                                         {% else %}
-                                            {{flight1.economy_fare | add:fee}}
+                                            {{total_price}}
                                         {% endif %}
                                         </span>
                                 {% endif %}

@@ -525,6 +525,8 @@
                                                             <input type="hidden" name="flight1Id" value="{{flight.id}}">
                                                             <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                                             <input type="hidden" name="seatClass" value="{{seat}}">
+                                                            <input type="hidden" name="destination" value="{{destination}}">
+                                                            <input type="hidden" name="origin" value="{{origin}}">
 
                                                             <input type="hidden" name="flight" value="{{flight}}">
                                                            
@@ -869,6 +871,9 @@
                                                                 <input type="hidden" name="flight1Id" value="{{flight2.id}}">
                                                                 <input type="hidden" name="flight1Date", value="{{depart_date|date:'d-m-Y'}}">
                                                                 <input type="hidden" name="seatClass" value="{{seat}}">
+                                                                <input type="hidden" name="flight" value="{{flight2}}">
+                                                                <input type="hidden" name="destination" value="{{destination}}">
+                                                            <input type="hidden" name="origin" value="{{origin}}">
                                                                 <button class="btn btn-primary btn-danger" type="submit">
                                                                     Book Flight &#8594;
                                                                 </button>
